@@ -52,7 +52,7 @@ export default {
   computed:{
     filteredNotes(){
       return this.notes.filter(note =>{
-        return note.title.match(this.searchTerm) || note.content.match(this.searchTerm)
+        return note.title.toLowerCase().match(this.searchTerm) || note.content.toLowerCase().match(this.searchTerm)
       })
     }
   },
@@ -71,88 +71,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-.index{
-  min-height: 73vh;
-  padding: 0;
-  .info{
-    display : flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    h2{
-      font-size: 32px;
-      font-weight: 900;
-    }
-    .new-btn{
-      color: #0a96f8 !important;
-      font-size: 20px;
-      font-weight: 700;
-      a{
-        &:visited {
-          color: #0a96f8;
-        }
-      }
-    } 
-  }
-  .notes{
-  display: flex;
-  // align-items: center;
-  flex-wrap: wrap;
-  .note{
-    width: 300px;
-    height: auto;
-    padding: 10px;
-    flex-grow:1;
-    
-    a{
-      color: black;
-    }
-    .note-card{
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      transition: all ease-in 0.1s;
-      &:hover{
-      box-shadow: 0px 12px 24px -10px rgba(0, 0, 0, 0.2);
-    }
-      .title{
-        font-size: 24px;
-        font-weight: 700;
-      }
-      .content{
-        margin-top:10px;
-        color: #666;
-        p{
-          margin: 0;
-        }
-      }
-      .last-edited{
-        display:flex;
-        align-items: center;
-        flex-wrap: wrap;
-        color : #ababab;
-        font-size : 14px;
-        margin-top: 20px;
-        .date{
-          display: flex;
-          align-items: center;
-          margin-right: 30px;
-          img{
-            margin-top: -2px;
-          }
-        }
-        .time{
-          display: flex;
-          align-items: center;
-        }
-        span{
-          margin-left: 5px;
-        }
-      }
-    }
-  }
-}
-}
-
 
 </style>

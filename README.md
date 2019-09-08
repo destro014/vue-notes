@@ -1,4 +1,4 @@
-# destro-notes
+# vue-notes
 
 > A note taking app made with love in Vue.js
 
