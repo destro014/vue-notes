@@ -169,7 +169,7 @@ h2 {
     }
     a{
       color : black !important;
-      &::visited{
+      &:visited{
         color: black !important;
       }
     }
