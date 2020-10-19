@@ -5,71 +5,83 @@
         <h2>Your notes</h2>
       </div>
       <div class="new-btn">
-        <router-link :to="{name :'AddNote'}">
+        <router-link :to="{ name: 'AddNote' }">
           + Add new
         </router-link>
       </div>
     </div>
-    <div class="notes" >
-        <div class="note" v-for ="note in filteredNotes.slice().reverse()" :key="note.id">
-          <router-link :to="{name : 'Note', params :{note_slug : note.slug}}">
-        <div class="note-card">
-          <div class="title">
-            {{note.title}}
-          </div>
-          <div class="content">
-            <p>{{note.content | snippet}}</p>
-          </div>
-          <div class="last-edited">
-            <div class="date">
-              <img src="@/assets/img/Calendar.png" alt="">
-              <span>{{note.moment[1]}} {{note.moment[2]}}, {{note.moment[0]}}</span>
+    <div class="notes">
+      <div
+        class="note"
+        v-for="note in filteredNotes.slice().reverse()"
+        :key="note.id"
+      >
+        <router-link :to="{ name: 'Note', params: { note_slug: note.slug } }">
+          <div class="note-card">
+            <div class="title">
+              {{ note.title }}
             </div>
-            <div class="time">
-              <img src="@/assets/img/Clock.png" alt="">
-              <span>{{ note.moment[3] }} : {{ note.moment[4] }} {{ note.moment[5] }}</span>
+            <div class="content">
+              <!-- <p>{{ note.content | snippet }}</p> -->
+            </div>
+            <div class="last-edited">
+              <div class="date">
+                <img src="@/assets/img/calendar.png" alt="" />
+                <span
+                  >{{ note.moment[1] }} {{ note.moment[2] }},
+                  {{ note.moment[0] }}</span
+                >
+              </div>
+              <div class="time">
+                <img src="@/assets/img/clock.png" alt="" />
+                <span
+                  >{{ note.moment[3] }} : {{ note.moment[4] }}
+                  {{ note.moment[5] }}</span
+                >
+              </div>
             </div>
           </div>
-        </div>        
-      </router-link>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
-import db from '@/firebase/init'
+import db from "@/firebase/init";
 
 export default {
-  name: 'Index',
-  props: ['searchTerm'],
-  data () {
+  name: "Index",
+  props: ["searchTerm"],
+  data() {
     return {
-      notes:[]
-    }
+      notes: [],
+    };
   },
-  computed:{
-    filteredNotes(){
-      return this.notes.filter(note =>{
-        return note.title.toLowerCase().match(this.searchTerm) || note.content.toLowerCase().match(this.searchTerm)
-      })
-    }
+  computed: {
+    filteredNotes() {
+      return this.notes.filter(note => {
+        return (
+          note.title.toLowerCase().match(this.searchTerm) ||
+          note.content.toLowerCase().match(this.searchTerm)
+        );
+      });
+    },
   },
-  created(){
-    db.collection('notes').orderBy('time').get().then(snapshot=>{
-      snapshot.forEach(doc=>{
-        let note=doc.data()
-        note.id=doc.id
-        this.notes.push(note)
-      })
-    })
-  }
-}
-
+  created() {
+    db.collection("notes")
+      .orderBy("time")
+      .get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          let note = doc.data();
+          note.id = doc.id;
+          this.notes.push(note);
+        });
+      });
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
