@@ -15,13 +15,13 @@ export default {
   name: "App",
   components: {
     Navbar,
-    Footer,
+    Footer
   },
   data() {
     return {
       searchTerm: "",
       refreshing: false,
-      registration: null,
+      registration: null
     };
   },
   methods: {
@@ -34,7 +34,7 @@ export default {
         return;
       }
       this.registration.waiting.postMessage("skipWaiting");
-    },
+    }
   },
   created() {
     document.addEventListener("swUpdated", this.refreshApp, { once: true });
@@ -55,7 +55,7 @@ export default {
         console.log("persistence is not available");
       }
     });
-  },
+  }
 };
 </script>
 

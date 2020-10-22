@@ -1,5 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap");
 
+/*colors:
+
+#0A96F8
+#0F68D3
+#131313
+*/
+
 body {
   padding: 0;
   margin: 0;
@@ -22,6 +29,9 @@ a {
     color: #0a96f8;
   }
 }
+svg {
+  vertical-align: top;
+}
 h2 {
   font-size: 32px;
   font-weight: 700;
@@ -35,18 +45,36 @@ h2 {
   justify-content: space-between;
   align-items: center;
   .brand {
-    height: 40px;
+    height: 24px;
     width: auto;
+    a {
+      display: inline-block;
+    }
+    svg {
+      height: 24px;
+    }
   }
   .search {
     width: 40%;
     border-radius: 8px;
     position: relative;
+    svg {
+      position: absolute;
+      top: 12px;
+      left: 8px;
+      stroke: #bbb;
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke-linecap: round;
+      stroke-width: 2;
+      stroke-linejoin: round;
+    }
     input {
       border: 1px solid transparent;
       width: calc(100% - 20px);
       margin: 0;
-      padding: 12px;
+      padding: 12px 12px 12px 32px;
       border-radius: 10px;
       &:focus {
         outline: none;
@@ -64,6 +92,15 @@ h2 {
     height: 40px;
     display: flex;
     align-items: center;
+    svg {
+      stroke: #666;
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke-linecap: round;
+      stroke-width: 2;
+      stroke-linejoin: round;
+    }
     span {
       margin-left: 5px;
       font-weight: 500;
@@ -84,12 +121,20 @@ h2 {
       font-weight: 700;
     }
     .new-btn {
-      color: #0a96f8 !important;
       font-size: 20px;
       font-weight: 700;
+      svg {
+        stroke: #0a96f8;
+        width: 24px;
+        height: 24px;
+        fill: none;
+        stroke-linecap: round;
+        stroke-width: 2;
+        stroke-linejoin: round;
+      }
       a {
         &:visited {
-          color: #0a96f8;
+          color: #0f68d3;
         }
       }
     }
@@ -125,13 +170,19 @@ h2 {
         color: #ababab;
         font-size: 14px;
         margin-top: 20px;
+        svg {
+          stroke: #ababab;
+          width: 16px;
+          height: 16px;
+          fill: none;
+          stroke-linecap: round;
+          stroke-width: 2;
+          stroke-linejoin: round;
+        }
         .date {
           display: flex;
           align-items: center;
           margin-right: 30px;
-          img {
-            margin-top: -2px;
-          }
         }
         .time {
           display: flex;
@@ -158,6 +209,15 @@ h2 {
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
+      svg {
+        width: 20px;
+        height: 20px;
+        fill: none;
+        stroke: black;
+        stroke-linecap: round;
+        stroke-width: 4;
+        stroke-linejoin: round;
+      }
       img {
         margin-right: 10px;
         height: 20px;
@@ -207,14 +267,7 @@ h2 {
       transform: rotate(360deg);
     }
   }
-  .check {
-    transform: scaleX(1) rotate(45deg);
-    margin: -3px 10px 0 0;
-    height: 12px;
-    width: 5px;
-    border-bottom: 2px solid white;
-    border-right: 2px solid white;
-  }
+
   .note-taking-area {
     // width:100%;
     .title {
@@ -267,6 +320,15 @@ h2 {
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
+      svg {
+        width: 20px;
+        height: 20px;
+        fill: none;
+        stroke: black;
+        stroke-linecap: round;
+        stroke-width: 4;
+        stroke-linejoin: round;
+      }
       img {
         margin-right: 10px;
         height: 20px;
@@ -301,37 +363,23 @@ h2 {
     background: #0a96f8;
     cursor: pointer;
   }
-  .circle {
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-    margin-right: 10px;
-    border-top: 2px solid white;
-    border-right: 2px solid transparent;
-    animation: spinner 0.6s linear infinite;
-  }
+
   @keyframes spinner {
     to {
       transform: rotate(360deg);
     }
   }
-  .check {
-    transform: scaleX(1) rotate(45deg);
-    margin: -3px 10px 0 0;
-    height: 12px;
-    width: 5px;
-    border-bottom: 2px solid white;
-    border-right: 2px solid white;
-  }
+
   .delete-btn {
-    padding: 10px 30px;
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: rgb(198, 40, 40);
+    stroke-linecap: round;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    padding: 12px;
     border-radius: 5px;
-    color: rgb(198, 40, 40);
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 14px;
-    border: 1px solid rgb(198, 40, 40);
-    justify-self: flex-end;
     cursor: pointer;
     &:hover {
       box-shadow: 0 6px 12px -4px rgba(198, 40, 40, 0.16);
@@ -415,11 +463,21 @@ h2 {
         color: rgb(198, 40, 40);
         background: rgb(251, 233, 231);
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
         margin-top: 30px;
         border-radius: 5px;
-        img {
-          margin-left: 8px;
+        line-height: 24px;
+        svg {
+          flex-grow: 0;
+          flex-shrink: 0;
+          width: 24px;
+          height: 24px;
+          fill: none;
+          stroke: rgb(198, 40, 40);
+          stroke-linecap: round;
+          stroke-width: 2;
+          stroke-linejoin: round;
+          margin-right: 8px;
         }
         .danger {
           text-align: center;
@@ -473,7 +531,7 @@ h2 {
   height: 12px;
   width: 12px;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 8px;
   border-radius: 50%;
   border-top: 2px solid white;
   border-right: 2px solid transparent;
@@ -485,12 +543,16 @@ h2 {
   }
 }
 .check {
-  transform: scaleX(1) rotate(45deg);
-  margin: -3px 10px 0 0;
-  height: 12px;
-  width: 5px;
-  border-bottom: 2px solid white;
-  border-right: 2px solid white;
+  margin-right: 8px;
+  fill: none;
+  stroke: white;
+  stroke-linecap: round;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  svg {
+    width: 16px;
+    height: 16px;
+  }
 }
 @media only screen and (max-width: 1026px) {
   .index .notes {
@@ -501,7 +563,8 @@ h2 {
 }
 @media only screen and (max-width: 768px) {
   .container {
-    padding: 0 24px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
   .info {
     .info-title {
@@ -572,7 +635,7 @@ h2 {
     .save-btn-disabled {
       max-width: 102px;
       padding: 10px 10px;
-      margin-left: 5px;
+      margin-left: 16px;
     }
     .delete-btn {
       padding: 10px 10px;
