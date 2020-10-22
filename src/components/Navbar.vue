@@ -12,6 +12,7 @@
         placeholder="Search..."
         v-model="searchTerm"
         @keyup="submit"
+        autocomplete="off"
       />
     </div>
     <div class="logout">
@@ -29,15 +30,15 @@ export default {
 
   data() {
     return {
-      searchTerm: ""
+      searchTerm: "",
     };
   },
   methods: {
     submit() {
-      this.$emit("inputData", this.searchTerm.toLowerCase());
-      this.tempMessage = "";
-    }
-  }
+      this.$emit("input-data", this.searchTerm.toLowerCase());
+      // this.tempMessage = "";
+    },
+  },
 };
 </script>
 

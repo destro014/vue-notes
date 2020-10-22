@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap");
 
 body {
   padding: 0;
@@ -6,9 +6,8 @@ body {
   background: #eee;
   width: 100%;
   height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+  font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
     "Helvetica Neue", sans-serif;
-  font-family: Montserrat;
 }
 
 .container {
@@ -25,7 +24,7 @@ a {
 }
 h2 {
   font-size: 32px;
-  font-weight: 800;
+  font-weight: 700;
 }
 .nav {
   height: auto;
@@ -40,22 +39,18 @@ h2 {
     width: auto;
   }
   .search {
-    height: 40px;
     width: 40%;
-    border-radius: 10px;
-    background: #ccc;
+    border-radius: 8px;
     position: relative;
-    // overflow: hidden;
     input {
-      border: none;
-      height: 40px;
+      border: 1px solid transparent;
       width: calc(100% - 20px);
-      background: transparent;
       margin: 0;
-      padding: 0 10px;
+      padding: 12px;
       border-radius: 10px;
       &:focus {
         outline: none;
+        border: 1px solid #0a96f8;
         box-shadow: 0px 12px 24px -10px rgba(0, 0, 0, 0.2);
       }
       &::placeholder {
@@ -67,12 +62,11 @@ h2 {
   .logout {
     width: auto;
     height: 40px;
-    /* background : red; */
     display: flex;
     align-items: center;
     span {
       margin-left: 5px;
-      font-weight: bold;
+      font-weight: 500;
       color: #666;
     }
   }
@@ -87,7 +81,7 @@ h2 {
     align-items: center;
     h2 {
       font-size: 32px;
-      font-weight: 800;
+      font-weight: 700;
     }
     .new-btn {
       color: #0a96f8 !important;
@@ -183,7 +177,7 @@ h2 {
     border-radius: 5px;
     color: white;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 14px;
     cursor: default;
     display: none;
@@ -294,7 +288,7 @@ h2 {
     border-radius: 5px;
     color: white;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 14px;
     cursor: default;
     display: none;
@@ -334,7 +328,7 @@ h2 {
     border-radius: 5px;
     color: rgb(198, 40, 40);
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 14px;
     border: 1px solid rgb(198, 40, 40);
     justify-self: flex-end;
@@ -421,15 +415,15 @@ h2 {
         color: rgb(198, 40, 40);
         background: rgb(251, 233, 231);
         justify-content: center;
-        align-items: flex-start;
+        align-items: center;
         margin-top: 30px;
         border-radius: 5px;
+        img {
+          margin-left: 8px;
+        }
         .danger {
           text-align: center;
           font-weight: 700;
-        }
-        img {
-          margin: 13px 10px 0 20px;
         }
       }
       .question {
@@ -532,10 +526,8 @@ h2 {
       width: 100%;
       flex-grow: 1;
       margin-top: 10px;
-      height: 36px;
       input {
         width: calc(100% - 20px);
-        height: 36px;
       }
     }
     .logout {
@@ -589,9 +581,6 @@ h2 {
       .delete-dialog {
         width: 80%;
         .alert {
-          img {
-            margin: 14px 0 0 10px;
-          }
           .danger {
             padding: 0 10px 0 0;
           }

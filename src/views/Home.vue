@@ -24,7 +24,8 @@
             {{ note.title }}
           </div>
           <div class="content">
-            <p>{{ note.content.slice(0, 50) }}</p>
+            <!-- <p>{{ note.content.slice(0, 50) }}</p> -->
+            <p>{{ snippet(note.content) }}</p>
           </div>
           <div class="last-edited">
             <div class="date">
@@ -52,7 +53,7 @@
 import db from "@/firebase/init";
 
 export default {
-  name: "Index",
+  name: "Home",
   props: ["searchTerm"],
   data() {
     return {
@@ -73,12 +74,20 @@ export default {
     db.collection("notes")
       .orderBy("time")
       .onSnapshot(snapshot => {
+        this.notes = [];
         snapshot.forEach(doc => {
           let note = doc.data();
           note.id = doc.id;
           this.notes.push(note);
         });
       });
+  },
+  methods: {
+    snippet(val) {
+      if (!val || typeof val != "string") return "";
+      val = val.slice(0, 50);
+      return val;
+    }
   }
 };
 </script>

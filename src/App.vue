@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Navbar @inputData="updateTerm" />
+    <Navbar @input-data="updateTerm" />
     <router-view :searchTerm="searchTerm" />
     <Footer />
   </div>
@@ -15,19 +15,37 @@ export default {
   name: "App",
   components: {
     Navbar,
-    Footer
+    Footer,
   },
   data() {
     return {
-      searchTerm: ""
+      searchTerm: "",
+      refreshing: false,
+      registration: null,
     };
   },
   methods: {
     updateTerm(variable) {
       this.searchTerm = variable;
-    }
+    },
+    refreshApp(e) {
+      this.registration = e.detail;
+      if (!this.registration || !this.registration.waiting) {
+        return;
+      }
+      this.registration.waiting.postMessage("skipWaiting");
+    },
   },
   created() {
+    document.addEventListener("swUpdated", this.refreshApp, { once: true });
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (this.refreshing) return;
+        console.log("refreshing refreshing refreshing");
+        this.refreshing = true;
+        window.location.reload();
+      });
+    }
     db.enablePersistence().catch(err => {
       if (err.code == "failed-precondition") {
         //multiple tab open
@@ -37,7 +55,7 @@ export default {
         console.log("persistence is not available");
       }
     });
-  }
+  },
 };
 </script>
 

@@ -1,11 +1,20 @@
 module.exports = {
   lintOnSave: false,
   pwa: {
-    name: "Destro Nores",
+    workboxPluginMode: "InjectManifest",
+    workboxOptions: {
+      swSrc: "./src/sw.js",
+      swDest: "service-worker.js"
+    },
+    name: "Destro Notes",
     themeColor: "#0a96f8",
-    msTileColor: "#000000",
+    backgroundColor: "#ffffff",
+    msTileColor: "#ffffff",
     appleMobileWebAppCapable: "yes",
-    appleMobileWebAppStatusBarStyle: "#0a96f8"
+    appleMobileWebAppStatusBarStyle: "#0a96f8",
+    manifestOptions: {
+      background_color: "#ffffff"
+    }
   },
   chainWebpack: config => {
     config.plugin("html").tap(args => {

@@ -158,7 +158,7 @@ export default {
             this.updated = true;
             this.updateStatus = "Updated";
             setTimeout(() => {
-              this.$router.push({ name: "Index" });
+              this.$router.push({ name: "Home" });
             }, 500);
           })
           .catch(err => {
