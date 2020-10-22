@@ -22,7 +22,7 @@
               {{ note.title }}
             </div>
             <div class="content">
-              <!-- <p>{{note.content | snippet}}</p> -->
+              <p>{{ note.content.slice(0, 50) }}</p>
             </div>
             <div class="last-edited">
               <div class="date">
@@ -60,6 +60,7 @@ export default {
   },
   computed: {
     filteredNotes() {
+      console.log(this.filteredNotes);
       return this.notes.filter(note => {
         return (
           note.title.toLowerCase().match(this.searchTerm) ||
@@ -67,6 +68,11 @@ export default {
         );
       });
     }
+    // snippet(val) {
+    //   if (!val || typeof val != "string") return "";
+    //   val = val.slice(0, 50);
+    //   return val;
+    // },
   },
   created() {
     db.collection("notes")

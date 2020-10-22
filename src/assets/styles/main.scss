@@ -16,6 +16,9 @@ body {
 
 a {
   text-decoration: none;
+  &:visited {
+    color: #0a96f8;
+  }
 }
 h2 {
   font-size: 32px;
