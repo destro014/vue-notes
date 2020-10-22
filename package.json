@@ -9,7 +9,10 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "firebase": "^7.24.0",
+    "normalize.css": "^8.0.1",
     "register-service-worker": "^1.7.1",
+    "slugify": "^1.4.5",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0"
   },
