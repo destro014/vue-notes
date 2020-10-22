@@ -9,7 +9,7 @@ var firebaseConfig = {
   projectId: "destro-notes",
   storageBucket: "destro-notes.appspot.com",
   messagingSenderId: "359133466712",
-  appId: "1:359133466712:web:5607ae9ca4d7f3f1c9ba2d",
+  appId: "1:359133466712:web:5607ae9ca4d7f3f1c9ba2d"
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
