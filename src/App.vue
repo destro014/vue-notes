@@ -9,6 +9,8 @@
 <script>
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import db from "@/firebase/init";
+
 export default {
   name: "App",
   components: {
@@ -24,6 +26,17 @@ export default {
     updateTerm(variable) {
       this.searchTerm = variable;
     }
+  },
+  created() {
+    db.enablePersistence().catch(err => {
+      if (err.code == "failed-precondition") {
+        //multiple tab open
+        console.log("persistence  failed");
+      } else if (err.code == "unimplemented") {
+        //lack of browser support
+        console.log("persistence is not available");
+      }
+    });
   }
 };
 </script>

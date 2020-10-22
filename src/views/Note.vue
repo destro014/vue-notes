@@ -136,6 +136,7 @@ export default {
           this.hour = this.hour % 12;
           this.meridian = "P.M";
         }
+
         db.collection("notes")
           .doc(this.note.id)
           .update({
@@ -172,9 +173,12 @@ export default {
       db.collection("notes")
         .doc(id)
         .delete()
-        .then(() => {
-          this.$router.push({ name: "Index" });
+        .catch(err => {
+          console.log(err);
         });
+      setTimeout(() => {
+        this.$router.push({ name: "Home" });
+      }, 500);
     }
   },
   created() {

@@ -101,6 +101,7 @@ export default {
           this.hour = this.hour % 12;
           this.meridian = "P.M";
         }
+
         db.collection("notes")
           .add({
             title: this.title,
@@ -116,17 +117,17 @@ export default {
             ],
             time: new Date().getTime() / 1000
           })
-          .then(() => {
-            this.saving = false;
-            this.saved = true;
-            this.saveStatus = "Saved";
-            setTimeout(() => {
-              this.$router.push({ name: "Home" });
-            }, 500);
-          })
           .catch(err => {
             console.log(err);
           });
+        setTimeout(() => {
+          this.saving = false;
+          this.saved = true;
+          this.saveStatus = "Saved";
+          setTimeout(() => {
+            this.$router.push({ name: "Home" });
+          }, 500);
+        }, 500);
       }
     }
   }

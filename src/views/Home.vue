@@ -16,29 +16,30 @@
         v-for="note in filteredNotes.slice().reverse()"
         :key="note.id"
       >
-        <router-link :to="{ name: 'Note', params: { note_slug: note.slug } }">
-          <div class="note-card">
-            <div class="title">
-              {{ note.title }}
+        <router-link
+          :to="{ name: 'Note', params: { note_slug: note.slug } }"
+          class="note-card"
+        >
+          <div class="title">
+            {{ note.title }}
+          </div>
+          <div class="content">
+            <p>{{ note.content.slice(0, 50) }}</p>
+          </div>
+          <div class="last-edited">
+            <div class="date">
+              <img src="@/assets/img/calendar.png" alt="" />
+              <span
+                >{{ note.moment[1] }} {{ note.moment[2] }},
+                {{ note.moment[0] }}</span
+              >
             </div>
-            <div class="content">
-              <p>{{ note.content.slice(0, 50) }}</p>
-            </div>
-            <div class="last-edited">
-              <div class="date">
-                <img src="@/assets/img/calendar.png" alt="" />
-                <span
-                  >{{ note.moment[1] }} {{ note.moment[2] }},
-                  {{ note.moment[0] }}</span
-                >
-              </div>
-              <div class="time">
-                <img src="@/assets/img/clock.png" alt="" />
-                <span
-                  >{{ note.moment[3] }} : {{ note.moment[4] }}
-                  {{ note.moment[5] }}</span
-                >
-              </div>
+            <div class="time">
+              <img src="@/assets/img/clock.png" alt="" />
+              <span
+                >{{ note.moment[3] }} : {{ note.moment[4] }}
+                {{ note.moment[5] }}</span
+              >
             </div>
           </div>
         </router-link>
@@ -60,7 +61,6 @@ export default {
   },
   computed: {
     filteredNotes() {
-      console.log(this.filteredNotes);
       return this.notes.filter(note => {
         return (
           note.title.toLowerCase().match(this.searchTerm) ||
@@ -68,17 +68,11 @@ export default {
         );
       });
     }
-    // snippet(val) {
-    //   if (!val || typeof val != "string") return "";
-    //   val = val.slice(0, 50);
-    //   return val;
-    // },
   },
   created() {
     db.collection("notes")
       .orderBy("time")
-      .get()
-      .then(snapshot => {
+      .onSnapshot(snapshot => {
         snapshot.forEach(doc => {
           let note = doc.data();
           note.id = doc.id;
