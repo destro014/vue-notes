@@ -1,4 +1,8 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:500,700&display=swap");
+@import "reboot";
+@import "variables";
+@import "typography";
+@import "functions";
+@import "mixins";
 
 /*colors:
 
@@ -6,27 +10,45 @@
 #0F68D3
 #131313
 */
+@media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
+  html {
+    @include includeLight;
+  }
+
+  html.dark {
+    @include includeDark;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    @include includeDark;
+  }
+
+  html.light {
+    @include includeLight;
+  }
+}
 
 body {
-  padding: 0;
-  margin: 0;
-  background: #eee;
   width: 100%;
   height: 100vh;
-  font-family: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-    "Helvetica Neue", sans-serif;
+  background-color: getColor(background-secondary);
+  color: getColor(text-primary);
 }
 
 .container {
-  padding: 0 80px;
+  padding-left: 80px;
+  padding-right: 80px;
+  margin-left: auto;
+  margin-right: auto;
   max-width: 1920px;
-  margin: 0 auto;
 }
 
 a {
   text-decoration: none;
   &:visited {
-    color: #0a96f8;
+    color: getColor(primary);
   }
 }
 svg {
@@ -35,6 +57,9 @@ svg {
 h2 {
   font-size: 32px;
   font-weight: 700;
+}
+.success {
+  background: getColor(success) !important;
 }
 .nav {
   height: auto;
@@ -62,7 +87,7 @@ h2 {
       position: absolute;
       top: 12px;
       left: 8px;
-      stroke: #bbb;
+      stroke: getColor(grey);
       width: 20px;
       height: 20px;
       fill: none;
@@ -72,17 +97,18 @@ h2 {
     }
     input {
       border: 1px solid transparent;
-      width: calc(100% - 20px);
+      width: 100%;
       margin: 0;
       padding: 12px 12px 12px 32px;
       border-radius: 10px;
+      background-color: getColor(background-tertary);
       &:focus {
         outline: none;
-        border: 1px solid #0a96f8;
+        border: 1px solid getColor(primary);
         box-shadow: 0px 12px 24px -10px rgba(0, 0, 0, 0.2);
       }
       &::placeholder {
-        color: #999;
+        color: getColor(grey);
         font-weight: 500;
       }
     }
@@ -93,7 +119,7 @@ h2 {
     display: flex;
     align-items: center;
     svg {
-      stroke: #666;
+      stroke: getColor(grey);
       width: 20px;
       height: 20px;
       fill: none;
@@ -104,12 +130,13 @@ h2 {
     span {
       margin-left: 5px;
       font-weight: 500;
-      color: #666;
+      color: getColor(grey);
     }
   }
 }
 .index {
-  min-height: 80vh;
+  height: auto;
+  min-height: calc(100vh - 158px);
 
   .info {
     display: flex;
@@ -124,7 +151,7 @@ h2 {
       font-size: 20px;
       font-weight: 700;
       svg {
-        stroke: #0a96f8;
+        stroke: getColor(primary);
         width: 24px;
         height: 24px;
         fill: none;
@@ -134,7 +161,7 @@ h2 {
       }
       a {
         &:visited {
-          color: #0f68d3;
+          color: getColor(primary);
         }
       }
     }
@@ -144,8 +171,9 @@ h2 {
     grid-template-columns: 1fr 1fr 1fr;
     column-gap: 24px;
     row-gap: 24px;
+    margin-top: 24px;
     .note {
-      background: #fff;
+      background: getColor(background-primary);
       padding: 20px;
       border-radius: 10px;
       transition: all ease-in 0.1s;
@@ -158,7 +186,7 @@ h2 {
       }
       .content {
         margin-top: 10px;
-        color: #666;
+        color: getColor(grey);
         p {
           margin: 0;
         }
@@ -167,11 +195,11 @@ h2 {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        color: #ababab;
+        color: getColor(grey);
         font-size: 14px;
         margin-top: 20px;
         svg {
-          stroke: #ababab;
+          stroke: getColor(grey);
           width: 16px;
           height: 16px;
           fill: none;
@@ -194,11 +222,14 @@ h2 {
       }
     }
     a {
-      color: black;
+      color: getColor(text-primary);
     }
   }
 }
 .add-note {
+  height: auto;
+  min-height: calc(100vh - 158px);
+
   .info {
     display: flex;
     flex-direction: row;
@@ -213,29 +244,26 @@ h2 {
         width: 20px;
         height: 20px;
         fill: none;
-        stroke: black;
+        stroke: getColor(text-primary);
         stroke-linecap: round;
         stroke-width: 4;
         stroke-linejoin: round;
-      }
-      img {
-        margin-right: 10px;
-        height: 20px;
+        margin-right: 8px;
       }
     }
     a {
-      color: black !important;
+      color: getColor(text-primary);
       &:visited {
-        color: black !important;
+        color: getColor(text-primary);
       }
     }
   }
   .save-btn-disabled {
     min-width: 100px;
-    background: #ccc;
+    background: get-color(grey);
     padding: 10px 30px;
     border-radius: 5px;
-    color: white;
+    color: get-color(light);
     text-transform: uppercase;
     font-weight: 500;
     font-size: 14px;
@@ -246,7 +274,7 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #0a96f8;
+    background: getColor(primary);
     cursor: pointer;
     &:hover {
       box-shadow: 0 6px 12px -4px rgba(10, 150, 248, 0.16);
@@ -258,7 +286,7 @@ h2 {
     border-radius: 50%;
     margin-right: 10px;
     border-radius: 50%;
-    border-top: 2px solid white;
+    border-top: 2px solid getColor(light);
     border-right: 2px solid transparent;
     animation: spinner 0.6s linear infinite;
   }
@@ -269,29 +297,30 @@ h2 {
   }
 
   .note-taking-area {
-    // width:100%;
+    margin-top: 24px;
     .title {
       input {
-        width: calc(100% - 40px);
+        width: 100%;
         font-size: 40px;
         background: transparent;
         border: none;
-        border-bottom: 2px solid #666666;
-        color: black;
+        border-bottom: 2px solid getColor(grey);
+        color: getColor(text-primary);
         font-weight: 700;
         padding: 0 20px;
         &:focus {
           outline: none;
-          border-bottom: 2px solid black;
+          border-bottom: 2px solid getColor(text-primary);
         }
       }
     }
     .note-typed {
       margin-top: 20px;
       textarea {
-        // background: transparent;
+        background: getColor(background-primary);
+        color: getColor(text-primary);
         border-radius: 20px;
-        width: calc(100% - 40px);
+        width: 100%;
         padding: 20px;
         border: none;
         min-height: 500px;
@@ -309,7 +338,9 @@ h2 {
     }
   }
 }
-.note {
+.note-view {
+  height: auto;
+  min-height: calc(100vh - 158px);
   .info {
     display: flex;
     flex-direction: row;
@@ -324,20 +355,17 @@ h2 {
         width: 20px;
         height: 20px;
         fill: none;
-        stroke: black;
+        stroke: getColor(text-primary);
         stroke-linecap: round;
         stroke-width: 4;
         stroke-linejoin: round;
-      }
-      img {
-        margin-right: 10px;
-        height: 20px;
+        margin-right: 8px;
       }
     }
     a {
-      color: black;
+      color: getColor(text-primary);
       &::visited {
-        color: black !important;
+        color: getColor(text-primary) !important;
       }
     }
   }
@@ -345,10 +373,10 @@ h2 {
     display: flex;
   }
   .save-btn-disabled {
-    background: #ccc;
+    background: getColor(grey);
     padding: 10px 30px;
     border-radius: 5px;
-    color: white;
+    color: getColor(light);
     text-transform: uppercase;
     font-weight: 500;
     font-size: 14px;
@@ -360,7 +388,7 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #0a96f8;
+    background: getColor(primary);
     cursor: pointer;
   }
 
@@ -371,10 +399,8 @@ h2 {
   }
 
   .delete-btn {
-    width: 20px;
-    height: 20px;
     fill: none;
-    stroke: rgb(198, 40, 40);
+    stroke: getColor(danger);
     stroke-linecap: round;
     stroke-width: 2;
     stroke-linejoin: round;
@@ -382,32 +408,33 @@ h2 {
     border-radius: 5px;
     cursor: pointer;
     &:hover {
-      box-shadow: 0 6px 12px -4px rgba(198, 40, 40, 0.16);
+      box-shadow: 0 6px 12px -4px rgba(198, 40, 40, 0.2);
     }
   }
   .note-taking-area {
-    // width:100%;
+    margin-top: 24px;
     .title {
       input {
-        width: calc(100% - 40px);
+        width: 100%;
         font-size: 40px;
         background: transparent;
-        border: none;
-        color: black;
+        border: 2px solid transparent;
+        color: getColor(text-primary);
         font-weight: 700;
         padding: 0 20px;
         &:focus {
           outline: none;
-          border-bottom: 2px solid black;
+          border-bottom: 2px solid getColor(text-primary);
         }
       }
     }
     .note-typed {
       margin-top: 20px;
       textarea {
-        // background: transparent;
+        background: getColor(background-primary);
+        color: getColor(text-primary);
         border-radius: 20px;
-        width: calc(100% - 40px);
+        width: 100%;
         padding: 20px;
         border: none;
         min-height: 500px;
@@ -436,7 +463,7 @@ h2 {
     align-items: center;
     animation: down 0.5s ease-in;
     .delete-dialog {
-      background: white;
+      background: getColor(background-tertary);
       width: 40%;
       height: auto;
       padding: 20px;
@@ -450,30 +477,37 @@ h2 {
           margin: 0;
         }
         .cross {
-          font-size: 30px;
-          font-weight: 700;
-          transform: rotate(45deg);
-          color: #777;
+          stroke: getColor(grey);
+          fill: none;
+          stroke-width: 2;
+          stroke-linecap: round;
+          stroke-linejoin: round;
           margin: 0;
+          padding: 8px;
           cursor: pointer;
+          svg {
+            width: 24px;
+            height: 24px;
+          }
         }
       }
       .alert {
         display: flex;
-        color: rgb(198, 40, 40);
-        background: rgb(251, 233, 231);
+        color: getColor(danger);
+        background: getColor(danger-light);
         justify-content: center;
         align-items: flex-start;
         margin-top: 30px;
         border-radius: 5px;
         line-height: 24px;
+        padding: 24px;
         svg {
           flex-grow: 0;
           flex-shrink: 0;
           width: 24px;
           height: 24px;
           fill: none;
-          stroke: rgb(198, 40, 40);
+          stroke: getColor(danger);
           stroke-linecap: round;
           stroke-width: 2;
           stroke-linejoin: round;
@@ -502,15 +536,15 @@ h2 {
         cursor: pointer;
       }
       .cancel-btn {
-        color: #777;
+        color: getColor(grey);
 
         &:hover {
-          background: #eee;
+          background: getColor(background-primary);
         }
       }
       .delete-approve-btn {
-        background: rgb(198, 40, 40);
-        color: rgb(251, 233, 231);
+        background: getColor(danger);
+        color: getColor(light);
         margin-left: 20px;
         &:hover {
           background: rgb(150, 40, 40);
@@ -533,7 +567,7 @@ h2 {
   border-radius: 50%;
   margin-right: 8px;
   border-radius: 50%;
-  border-top: 2px solid white;
+  border-top: 2px solid getColor(light);
   border-right: 2px solid transparent;
   animation: spinner 0.6s linear infinite;
 }
@@ -545,7 +579,7 @@ h2 {
 .check {
   margin-right: 8px;
   fill: none;
-  stroke: white;
+  stroke: getColor(light);
   stroke-linecap: round;
   stroke-width: 2;
   stroke-linejoin: round;
@@ -553,6 +587,12 @@ h2 {
     width: 16px;
     height: 16px;
   }
+}
+.footer {
+  padding: 32px 0;
+  color: getColor(grey);
+  text-align: center;
+  vertical-align: middle;
 }
 @media only screen and (max-width: 1026px) {
   .index .notes {
@@ -590,7 +630,7 @@ h2 {
       flex-grow: 1;
       margin-top: 10px;
       input {
-        width: calc(100% - 44px);
+        width: 100%;
       }
     }
     .logout {
@@ -598,6 +638,7 @@ h2 {
     }
   }
   .index {
+    min-height: calc(100vh - 208px);
     .info {
       .new-btn {
         font-size: 18px;
@@ -617,7 +658,7 @@ h2 {
         input {
           font-size: 24px;
           padding: 0 10px;
-          width: calc(100% - 20px);
+          width: 100%;
         }
       }
     }
@@ -628,7 +669,7 @@ h2 {
         input {
           font-size: 18px;
           padding: 0 10px;
-          width: calc(100% - 20px);
+          width: 100%;
         }
       }
     }

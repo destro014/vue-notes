@@ -1,0 +1,11 @@
+@mixin includeLight {
+    @each $name, $color in $colors {
+        --#{$name}: #{$color};
+    }
+}
+
+@mixin includeDark {
+    @each $name, $color in $colors-dark {
+        --#{$name}: #{$color};
+    }
+}

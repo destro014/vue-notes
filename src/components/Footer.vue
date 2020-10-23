@@ -23,14 +23,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.footer {
-  padding: 0;
-  color: #777;
-  text-align: center;
-  height: 60px;
-  line-height: 60px;
-  vertical-align: middle;
-  margin-top: 50px;
-}
-</style>
+<style lang="scss"></style>

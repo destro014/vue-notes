@@ -1,5 +1,5 @@
 <template>
-  <div class="note container" v-if="note">
+  <div class="note-view container" v-if="note">
     <div class="info">
       <router-link :to="{ name: 'Home' }">
         <div class="info-title">
@@ -11,7 +11,12 @@
       </router-link>
       <div class="cta-btn">
         <div class="delete-btn" @click="deletePopup">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path
               d="M19.325 9.4682C19.325 9.4682 18.782 16.2032 18.467 19.0402C18.317 20.3952 17.48 21.1892 16.109 21.2142C13.5 21.2612 10.888 21.2642 8.28003 21.2092C6.96103 21.1822 6.13803 20.3782 5.99103 19.0472C5.67403 16.1852 5.13403 9.4682 5.13403 9.4682"
             />
@@ -58,7 +63,17 @@
       <div class="delete-dialog">
         <div class="bar">
           <h3>Confirm delete?</h3>
-          <p class="cross" @click="deletePopup">+</p>
+          <p class="cross" @click="deletePopup">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14.3955 9.59491L9.60352 14.3869" />
+              <path d="M14.397 14.3898L9.60095 9.59277" />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M16.3345 2.75018H7.66549C4.64449 2.75018 2.75049 4.88918 2.75049 7.91618V16.0842C2.75049 19.1112 4.63549 21.2502 7.66549 21.2502H16.3335C19.3645 21.2502 21.2505 19.1112 21.2505 16.0842V7.91618C21.2505 4.88918 19.3645 2.75018 16.3345 2.75018Z"
+              />
+            </svg>
+          </p>
         </div>
         <div class="alert">
           <p class="danger">
