@@ -148,8 +148,6 @@ h2 {
       font-weight: 700;
     }
     .new-btn {
-      font-size: 20px;
-      font-weight: 700;
       svg {
         stroke: getColor(primary);
         width: 24px;
@@ -260,10 +258,10 @@ h2 {
   }
   .save-btn-disabled {
     min-width: 100px;
-    background: get-color(grey);
-    padding: 10px 30px;
+    background: getColor(grey);
+    padding: 8px 16px;
     border-radius: 5px;
-    color: get-color(light);
+    color: getColor(light);
     text-transform: uppercase;
     font-weight: 500;
     font-size: 14px;
@@ -374,8 +372,8 @@ h2 {
   }
   .save-btn-disabled {
     background: getColor(grey);
-    padding: 10px 30px;
-    border-radius: 5px;
+    padding: 8px 16px;
+    border-radius: 4px;
     color: getColor(light);
     text-transform: uppercase;
     font-weight: 500;
@@ -405,7 +403,7 @@ h2 {
     stroke-width: 2;
     stroke-linejoin: round;
     padding: 12px;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
     &:hover {
       box-shadow: 0 6px 12px -4px rgba(198, 40, 40, 0.2);
@@ -528,7 +526,7 @@ h2 {
       justify-content: flex-end;
       margin-top: 20px;
       .btn {
-        padding: 10px 25px;
+        padding: 8px 16px;
         text-transform: uppercase;
         font-weight: 500;
         font-size: 14px;
@@ -641,7 +639,7 @@ h2 {
     min-height: calc(100vh - 208px);
     .info {
       .new-btn {
-        font-size: 18px;
+        font-size: 16px;
       }
     }
     .notes {
@@ -651,13 +649,13 @@ h2 {
   .add-note {
     .save-btn-disabled {
       max-width: 80px;
-      padding: 10px 10px;
+      padding: 8px 16px;
     }
     .note-taking-area {
       .title {
         input {
           font-size: 24px;
-          padding: 0 10px;
+          padding: 0 8px;
           width: 100%;
         }
       }
@@ -675,12 +673,14 @@ h2 {
     }
     .save-btn-disabled {
       max-width: 102px;
-      padding: 10px 10px;
+      padding: 8px 16px;
       margin-left: 16px;
     }
     .delete-btn {
-      padding: 10px 10px;
+      padding: 8px 8px;
     }
+  }
+  .note-view {
     .delete-popup {
       .delete-dialog {
         width: 80%;
