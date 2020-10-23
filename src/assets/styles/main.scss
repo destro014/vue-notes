@@ -102,6 +102,7 @@ h2 {
       padding: 12px 12px 12px 32px;
       border-radius: 10px;
       background-color: getColor(background-tertary);
+      color: getColor(text-primary);
       &:focus {
         outline: none;
         border: 1px solid getColor(primary);
