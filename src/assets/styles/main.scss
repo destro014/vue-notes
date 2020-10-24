@@ -95,6 +95,7 @@ h2 {
       stroke-width: 2;
       stroke-linejoin: round;
     }
+
     input {
       border: 1px solid transparent;
       width: 100%;
@@ -135,6 +136,100 @@ h2 {
     }
   }
 }
+.login {
+  width: 100%;
+  max-width: 640px;
+
+  height: auto;
+  min-height: calc(100vh - 158px);
+  form {
+    margin-top: 80px;
+  }
+  label {
+    position: absolute;
+    font-size: 14px;
+    top: -24px;
+    color: getColor(grey);
+    display: block;
+  }
+  .input-group {
+    margin-bottom: 48px;
+    position: relative;
+    input {
+      width: 100%;
+      padding: 16px 16px 16px 48px;
+      outline: none;
+      background: getColor(background-primary);
+      color: getColor(text-primary);
+      border: 1px solid transparent;
+      border-radius: 8px;
+      &:focus,
+      &:active {
+        border-color: getColor(primary);
+        ~ label {
+          color: getColor(primary);
+        }
+        ~ svg {
+          stroke: getColor(primary);
+        }
+        ~ .show,
+        ~ .hide {
+          stroke: getColor(grey) !important;
+        }
+      }
+    }
+    svg {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      stroke: getColor(grey);
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke-linecap: round;
+      stroke-width: 2;
+      stroke-linejoin: round;
+    }
+    .show,
+    .hide {
+      cursor: pointer;
+      right: 8px;
+      left: auto;
+    }
+  }
+  .feedback {
+    color: getColor(danger);
+    margin-top: -24px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .submit-btn-disabled {
+    outline: none;
+    border: none;
+    width: 100%;
+    background: getColor(background-tertary);
+    color: getColor(grey);
+    padding: 16px 32px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: default;
+    pointer-events: none;
+  }
+  .submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: getColor(light);
+    background: getColor(primary);
+    cursor: pointer;
+    pointer-events: visible;
+    &:hover {
+      box-shadow: 0 6px 12px -4px rgba(10, 150, 248, 0.16);
+    }
+  }
+}
 .index {
   height: auto;
   min-height: calc(100vh - 158px);
@@ -144,9 +239,10 @@ h2 {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    h2 {
-      font-size: 32px;
-      font-weight: 700;
+    p {
+      font-size: 16px;
+      font-weight: bold;
+      color: getColor(grey);
     }
     .new-btn {
       svg {
@@ -165,6 +261,20 @@ h2 {
       }
     }
   }
+  .skeleton {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 24px;
+    row-gap: 24px;
+    margin-top: 24px;
+    .skeleton-card {
+      background: getColor(background-primary);
+      height: 122px;
+      padding: 20px;
+      border-radius: 10px;
+      transition: all ease-in 0.1s;
+    }
+  }
   .notes {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -180,11 +290,12 @@ h2 {
         box-shadow: 0px 12px 24px -10px rgba(0, 0, 0, 0.2);
       }
       .title {
-        font-size: 24px;
+        font-size: 16px;
         font-weight: 700;
       }
       .content {
         margin-top: 10px;
+        font-size: 14px;
         color: getColor(grey);
         p {
           margin: 0;
@@ -239,11 +350,16 @@ h2 {
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
+      p {
+        font-size: 16px;
+        font-weight: bold;
+        color: getColor(grey);
+      }
       svg {
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
         fill: none;
-        stroke: getColor(text-primary);
+        stroke: getColor(grey);
         stroke-linecap: round;
         stroke-width: 4;
         stroke-linejoin: round;
@@ -350,11 +466,16 @@ h2 {
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
+      p {
+        font-size: 16px;
+        font-weight: bold;
+        color: getColor(grey);
+      }
       svg {
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
         fill: none;
-        stroke: getColor(text-primary);
+        stroke: getColor(grey);
         stroke-linecap: round;
         stroke-width: 4;
         stroke-linejoin: round;
@@ -432,7 +553,7 @@ h2 {
       textarea {
         background: getColor(background-primary);
         color: getColor(text-primary);
-        border-radius: 20px;
+        border-radius: 24px;
         width: 100%;
         padding: 20px;
         border: none;
@@ -448,6 +569,21 @@ h2 {
           font-weight: 500;
         }
       }
+    }
+  }
+  .note-skeleton {
+    .title-skeleton {
+      background: getColor(background-primary);
+      height: 50px;
+      width: 100%;
+      margin-bottom: 16px;
+      margin-top: 24px;
+    }
+    .note-taking-skeleton {
+      min-height: 500px;
+      max-height: 800px;
+      background: getColor(background-primary);
+      border-radius: 24px;
     }
   }
   .delete-popup {
@@ -605,16 +741,6 @@ h2 {
     padding-left: 24px;
     padding-right: 24px;
   }
-  .info {
-    .info-title {
-      h2 {
-        font-size: 24px;
-      }
-      img {
-        margin-right: 5px !important;
-      }
-    }
-  }
   .nav {
     .brand {
       order: 1;
@@ -644,6 +770,9 @@ h2 {
       }
     }
     .notes {
+      grid-template-columns: 1fr;
+    }
+    .skeleton {
       grid-template-columns: 1fr;
     }
   }
@@ -689,24 +818,6 @@ h2 {
           .danger {
             padding: 0 10px 0 0;
           }
-        }
-      }
-    }
-  }
-}
-@media only screen and (max-width: 375px) {
-  .info {
-    .info-title {
-      h2 {
-        font-size: 18px;
-      }
-    }
-  }
-  .note {
-    .info {
-      .info-title {
-        img {
-          height: 16px;
         }
       }
     }

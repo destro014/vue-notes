@@ -1,12 +1,12 @@
 <template>
-  <div class="note-view container" v-if="note">
+  <div class="note-view container">
     <div class="info">
       <router-link :to="{ name: 'Home' }">
         <div class="info-title">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M15.5 19L8.5 12L15.5 5" />
           </svg>
-          <h2>Your notes</h2>
+          <p>Your notes</p>
         </div>
       </router-link>
       <div class="cta-btn">
@@ -29,7 +29,7 @@
 
         <div
           class="save-btn-disabled"
-          :class="{ 'save-btn': edited() }"
+          :class="{ 'save-btn': noteEdited }"
           @click="update(note)"
         >
           <div class="circle" v-if="updating"></div>
@@ -47,17 +47,28 @@
         </div>
       </div>
     </div>
-    <div class="note-taking-area">
+    <div class="note-taking-area" v-if="note">
       <div class="title">
-        <input type="text" placeholder="title" v-model="note.title" />
+        <input
+          type="text"
+          placeholder="title"
+          v-model="note.title"
+          @keyup="edited()"
+        />
       </div>
       <div class="note-typed">
         <textarea
           name="note"
           placeholder="type your note here"
           v-model="note.content"
+          @keyup="edited()"
         ></textarea>
       </div>
+    </div>
+
+    <div class="note-skeleton" v-else>
+      <div class="title-skeleton"></div>
+      <div class="note-taking-skeleton"></div>
     </div>
     <div class="delete-popup" v-if="deleteClicked">
       <div class="delete-dialog">
@@ -136,16 +147,16 @@ export default {
       day: null,
       hour: null,
       minute: null,
-      meridian: null
-      // edited : null
+      meridian: null,
+      noteEdited: null
     };
   },
   methods: {
     edited() {
       if (this.title != this.note.title || this.content != this.note.content) {
-        return true;
+        this.noteEdited = true;
       } else {
-        return false;
+        this.noteEdited = false;
       }
     },
     update() {

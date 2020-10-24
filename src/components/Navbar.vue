@@ -40,7 +40,7 @@
         </svg>
       </router-link>
     </div>
-    <div class="search">
+    <div class="search" v-if="showSearch">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <circle cx="11.7666" cy="11.7666" r="8.98856" />
         <path d="M18.0183 18.4851L21.5423 22" />
@@ -72,18 +72,27 @@
 </template>
 
 <script>
+// import { watch } from "vue";
 export default {
   name: "Navbar",
 
   data() {
     return {
-      searchTerm: ""
+      searchTerm: "",
+      showSearch: true
     };
   },
   methods: {
     submit() {
       this.$emit("input-data", this.searchTerm.toLowerCase());
       // this.tempMessage = "";
+    }
+  },
+  watch: {
+    $route() {
+      if (this.$route.path != "/") {
+        this.showSearch = false;
+      } else this.showSearch = true;
     }
   }
 };

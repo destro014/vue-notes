@@ -6,7 +6,7 @@
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M15.5 19L8.5 12L15.5 5" />
           </svg>
-          <h2>Your notes</h2>
+          <p>Your notes</p>
         </div>
       </router-link>
       <div

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import AddNote from "../views/AddNote.vue";
 import Note from "../views/Note.vue";
+import Login from "../auth/Login.vue";
 
 const routes = [
   {
@@ -14,15 +15,16 @@ const routes = [
     name: "AddNote",
     component: AddNote
   },
-  // {
-  //   path: '/',
-  //   name: 'UpdateNotes',
-  //   component: UpdateNotes
-  // },
+
   {
     path: "/note/:note_slug",
     name: "Note",
     component: Note
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login
   }
 ];
 

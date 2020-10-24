@@ -2,7 +2,7 @@
   <div class="index container">
     <div class="info">
       <div class="info-title">
-        <h2>Your notes</h2>
+        <p>Your notes</p>
       </div>
       <div class="new-btn">
         <router-link :to="{ name: 'AddNote' }">
@@ -20,7 +20,7 @@
         </router-link>
       </div>
     </div>
-    <div class="notes">
+    <div class="notes" v-if="notes">
       <div
         class="note"
         v-for="note in filteredNotes.slice().reverse()"
@@ -114,6 +114,11 @@
         </router-link>
       </div>
     </div>
+    <div class="skeleton" v-else>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
   </div>
 </template>
 
@@ -125,7 +130,7 @@ export default {
   props: ["searchTerm"],
   data() {
     return {
-      notes: []
+      notes: null
     };
   },
   computed: {
@@ -138,7 +143,7 @@ export default {
       });
     }
   },
-  created() {
+  mounted() {
     db.collection("notes")
       .orderBy("time")
       .onSnapshot(snapshot => {
