@@ -55,7 +55,7 @@
         autocomplete="off"
       />
     </div>
-    <div class="logout">
+    <div class="logout" @click="logout" v-if="user">
       <!-- <router-link :to=> -->
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path
@@ -72,20 +72,41 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
+import "firebase/auth";
 export default {
   name: "Navbar",
 
   data() {
     return {
       searchTerm: "",
-      showSearch: true
+      showSearch: true,
+      user: null
     };
   },
   methods: {
     submit() {
       this.$emit("input-data", this.searchTerm.toLowerCase());
       // this.tempMessage = "";
+    },
+    logout() {
+      console.log("logged out");
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.push({ name: "Login" });
+        });
     }
+  },
+  created() {
+    // let user = firebase.auth().currentUser;
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user = user;
+      } else this.user = null;
+    });
   },
   watch: {
     $route() {

@@ -4,12 +4,6 @@
 @import "functions";
 @import "mixins";
 
-/*colors:
-
-#0A96F8
-#0F68D3
-#131313
-*/
 @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
   html {
     @include includeLight;
@@ -54,10 +48,7 @@ a {
 svg {
   vertical-align: top;
 }
-h2 {
-  font-size: 32px;
-  font-weight: 700;
-}
+
 .success {
   background: getColor(success) !important;
 }
@@ -120,6 +111,7 @@ h2 {
     height: 40px;
     display: flex;
     align-items: center;
+    cursor: pointer;
     svg {
       stroke: getColor(grey);
       width: 20px;
@@ -139,9 +131,9 @@ h2 {
 .login {
   width: 100%;
   max-width: 640px;
-
   height: auto;
-  min-height: calc(100vh - 158px);
+  min-height: calc(100vh - 178px);
+  margin-top: 24px;
   form {
     margin-top: 80px;
   }

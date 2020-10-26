@@ -10,6 +10,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import db from "@/firebase/init";
+import firebase from "firebase";
 
 export default {
   name: "App",
@@ -21,7 +22,8 @@ export default {
     return {
       searchTerm: "",
       refreshing: false,
-      registration: null
+      registration: null,
+      user: null
     };
   },
   methods: {
@@ -55,19 +57,16 @@ export default {
         console.log("persistence is not available");
       }
     });
+    this.user = firebase.auth().currentUser;
+  },
+  watch: {
+    user: function() {
+      console.log("user update");
+    }
   }
 };
 </script>
 
 <style lang="scss">
 @import "@/assets/styles/main.scss";
-
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: auto;
-}
 </style>

@@ -76,19 +76,22 @@
 
         <label for="password">Password</label>
       </div>
-      <p class="feedback">{{ feedback }}</p>
+      <p class="feedback" v-if="feedback">{{ feedback }}</p>
       <button
         class="submit-btn-disabled"
         type="submit"
         :class="{ 'submit-btn': filled }"
       >
-        Login
+        <div class="loader" v-if="loggingIn"></div>
+        {{ loginText }}
       </button>
     </form>
   </div>
 </template>
 
 <script>
+import firebase from "firebase/app";
+import "firebase/auth";
 import db from "@/firebase/init";
 
 export default {
@@ -97,22 +100,43 @@ export default {
     return {
       showPassword: false,
       filled: false,
-      feedback: "hello",
+      feedback: null,
       username: null,
       password: null,
-      passwordType: "password"
+      passwordType: "password",
+      loggingIn: false,
+      loginText: "Login",
+      user: null
     };
   },
+
   methods: {
     login() {
-      db.collection("users")
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
-          });
-        });
+      this.feedback = null;
+      this.loggingIn = true;
+      this.loginText = "Logging In";
+      let ref = db.collection("users").doc(this.username);
+      ref.get().then(doc => {
+        if (doc.exists) {
+          firebase
+            .auth()
+            .signInWithEmailAndPassword(doc.data().email, this.password)
+            .then(user => {
+              console.log(user);
+              this.$router.push({ name: "Home" });
+            })
+            .catch(err => {
+              this.feedback = err.message;
+              this.loggingIn = false;
+              this.loginText = "Login";
+            });
+          console.log(doc.data().email);
+        } else {
+          this.loggingIn = false;
+          this.loginText = "Login";
+          this.feedback = "Username doesn't exists";
+        }
+      });
     },
     checkInput() {
       if (this.username && this.password) {
