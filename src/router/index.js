@@ -43,21 +43,19 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
-setTimeout(() => {
-  router.beforeEach((to, from, next) => {
-    //check if router requires auth
-    if (to.matched.some(rec => rec.meta.requiresAuth)) {
-      //check auth state of user
-      let user = firebase.auth().currentUser;
-      if (user) {
-        next();
-      } else {
-        // no user signed
-        next({ name: "Login" });
-      }
-    } else {
+router.beforeEach((to, from, next) => {
+  //check if router requires auth
+  if (to.matched.some(rec => rec.meta.requiresAuth)) {
+    //check auth state of user
+    let user = firebase.auth().currentUser;
+    if (user) {
       next();
+    } else {
+      // no user signed
+      next({ name: "Login" });
     }
-  });
-}, 50);
+  } else {
+    next();
+  }
+});
 export default router;
