@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Navbar @input-data="updateTerm" />
+    <div class="loader" v-if="user">Loading</div>
     <router-view :searchTerm="searchTerm" />
     <Footer />
   </div>

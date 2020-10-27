@@ -106,7 +106,7 @@ export default {
       passwordType: "password",
       loggingIn: false,
       loginText: "Login",
-      user: null
+      user: false
     };
   },
 
@@ -121,8 +121,7 @@ export default {
           firebase
             .auth()
             .signInWithEmailAndPassword(doc.data().email, this.password)
-            .then(user => {
-              console.log(user);
+            .then(() => {
               this.$router.push({ name: "Home" });
             })
             .catch(err => {
@@ -130,7 +129,6 @@ export default {
               this.loggingIn = false;
               this.loginText = "Login";
             });
-          console.log(doc.data().email);
         } else {
           this.loggingIn = false;
           this.loginText = "Login";
