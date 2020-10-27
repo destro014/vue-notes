@@ -73,7 +73,6 @@
 
 <script>
 import firebase from "firebase/app";
-import "firebase/auth";
 export default {
   name: "Navbar",
 
@@ -90,7 +89,6 @@ export default {
       // this.tempMessage = "";
     },
     logout() {
-      console.log("logged out");
       firebase
         .auth()
         .signOut()
@@ -100,8 +98,6 @@ export default {
     }
   },
   created() {
-    // let user = firebase.auth().currentUser;
-
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.user = user;

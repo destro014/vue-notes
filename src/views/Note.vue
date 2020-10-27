@@ -116,7 +116,6 @@
 <script>
 import db from "@/firebase/init";
 import slugify from "slugify";
-
 export default {
   name: "Note",
   data() {
@@ -190,7 +189,6 @@ export default {
           this.hour = this.hour % 12;
           this.meridian = "P.M";
         }
-
         db.collection("notes")
           .doc(this.note.id)
           .update({

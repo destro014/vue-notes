@@ -3,7 +3,9 @@ import Home from "../views/Home.vue";
 import AddNote from "../views/AddNote.vue";
 import Note from "../views/Note.vue";
 import Login from "../auth/Login.vue";
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
+
 const routes = [
   {
     path: "/",
@@ -41,25 +43,21 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
-
-router.beforeEach((to, from, next) => {
-  //check if router requires auth
-  if (to.matched.some(rec => rec.meta.requiresAuth)) {
-    //check auth state of user
-    let user = firebase.auth().currentUser;
-    console.log(user);
-
-    if (user) {
-      console.log(user);
-      //user signed in proceed to route
-      next();
+setTimeout(() => {
+  router.beforeEach((to, from, next) => {
+    //check if router requires auth
+    if (to.matched.some(rec => rec.meta.requiresAuth)) {
+      //check auth state of user
+      let user = firebase.auth().currentUser;
+      if (user) {
+        next();
+      } else {
+        // no user signed
+        next({ name: "Login" });
+      }
     } else {
-      console.log("No user");
-      // no user signed
-      next({ name: "Login" });
+      next();
     }
-  } else {
-    next();
-  }
-});
+  });
+}, 50);
 export default router;

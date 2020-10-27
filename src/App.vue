@@ -10,7 +10,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import db from "@/firebase/init";
-import firebase from "firebase";
 
 export default {
   name: "App",
@@ -57,12 +56,6 @@ export default {
         console.log("persistence is not available");
       }
     });
-    this.user = firebase.auth().currentUser;
-  },
-  watch: {
-    user: function() {
-      console.log("user update");
-    }
   }
 };
 </script>
