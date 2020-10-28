@@ -48,13 +48,15 @@ a {
 svg {
   vertical-align: top;
 }
-
+button {
+  outline: none;
+  border: none;
+}
 .success {
   background: getColor(success) !important;
 }
 .nav {
-  height: auto;
-  min-height: 76px;
+  height: 76px;
   padding-top: 16px;
   padding-bottom: 16px;
   display: flex;
@@ -93,7 +95,7 @@ svg {
       width: 100%;
       margin: 0;
       padding: 12px 12px 12px 32px;
-      border-radius: 10px;
+      border-radius: 8px;
       background-color: getColor(background-tertary);
       color: getColor(text-primary);
       &:focus {
@@ -129,6 +131,7 @@ svg {
     }
   }
 }
+
 .login {
   width: 100%;
   max-width: 640px;
@@ -223,6 +226,12 @@ svg {
     }
   }
 }
+.empty-state,
+.no-search-result {
+  color: getColor(grey);
+  text-align: center;
+  margin-top: 40px;
+}
 .index {
   height: auto;
   min-height: calc(100vh - 158px);
@@ -264,7 +273,7 @@ svg {
       background: getColor(background-primary);
       height: 122px;
       padding: 20px;
-      border-radius: 10px;
+      border-radius: 8px;
       transition: all ease-in 0.1s;
     }
   }
@@ -277,17 +286,17 @@ svg {
     .note {
       background: getColor(background-primary);
       padding: 20px;
-      border-radius: 10px;
+      border-radius: 8px;
       transition: all ease-in 0.1s;
       &:hover {
-        box-shadow: 0px 12px 24px -10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 12px 24px -8px rgba(0, 0, 0, 0.2);
       }
       .title {
         font-size: 16px;
         font-weight: 700;
       }
       .content {
-        margin-top: 10px;
+        margin-top: 8px;
         font-size: 14px;
         color: getColor(grey);
         p {
@@ -338,6 +347,7 @@ svg {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    height: 48px;
     .info-title {
       display: flex;
       flex-direction: row;
@@ -367,10 +377,11 @@ svg {
     }
   }
   .save-btn-disabled {
-    min-width: 100px;
+    width: 144px;
     background: getColor(grey);
     padding: 8px 16px;
-    border-radius: 5px;
+    height: 48px;
+    border-radius: 4px;
     color: getColor(light);
     text-transform: uppercase;
     font-weight: 500;
@@ -392,7 +403,7 @@ svg {
     height: 12px;
     width: 12px;
     border-radius: 50%;
-    margin-right: 10px;
+    margin-right: 8px;
     border-radius: 50%;
     border-top: 2px solid getColor(light);
     border-right: 2px solid transparent;
@@ -486,6 +497,7 @@ svg {
     display: flex;
   }
   .save-btn-disabled {
+    width: 144px;
     background: getColor(grey);
     padding: 8px 16px;
     border-radius: 4px;
@@ -569,7 +581,8 @@ svg {
       background: getColor(background-primary);
       height: 50px;
       width: 100%;
-      margin-bottom: 20px;
+      border-radius: 24px;
+      margin-bottom: 24px;
       margin-top: 24px;
     }
     .note-taking-skeleton {
@@ -735,6 +748,7 @@ svg {
     padding-right: 24px;
   }
   .nav {
+    height: auto;
     .brand {
       order: 1;
       img {
@@ -746,7 +760,7 @@ svg {
       order: 3;
       width: 100%;
       flex-grow: 1;
-      margin-top: 10px;
+      margin-top: 8px;
       input {
         width: 100%;
       }
@@ -755,6 +769,7 @@ svg {
       order: 2;
     }
   }
+
   .index {
     min-height: calc(100vh - 208px);
     .info {
@@ -770,10 +785,6 @@ svg {
     }
   }
   .add-note {
-    .save-btn-disabled {
-      max-width: 80px;
-      padding: 8px 16px;
-    }
     .note-taking-area {
       .title {
         input {
@@ -789,13 +800,13 @@ svg {
       .title {
         input {
           font-size: 18px;
-          padding: 0 10px;
+          padding: 0 8px;
           width: 100%;
         }
       }
     }
     .save-btn-disabled {
-      max-width: 102px;
+      width: 144px;
       padding: 8px 16px;
       margin-left: 16px;
     }
@@ -809,7 +820,7 @@ svg {
         width: 80%;
         .alert {
           .danger {
-            padding: 0 10px 0 0;
+            padding: 0 8px 0 0;
           }
         }
       }

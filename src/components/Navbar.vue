@@ -55,7 +55,7 @@
         autocomplete="off"
       />
     </div>
-    <div class="logout" @click="logout" v-if="user">
+    <a class="logout" href="#" @click="logout" v-if="user">
       <!-- <router-link :to=> -->
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path
@@ -67,7 +67,7 @@
 
       <span>Logout</span>
       <!-- </router-link> -->
-    </div>
+    </a>
   </div>
 </template>
 

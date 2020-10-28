@@ -34,7 +34,6 @@
             {{ note.title }}
           </div>
           <div class="content">
-            <!-- <p>{{ note.content.slice(0, 50) }}</p> -->
             <p>{{ snippet(note.content) }}</p>
           </div>
           <div class="last-edited">
@@ -118,6 +117,20 @@
       <div class="skeleton-card"></div>
       <div class="skeleton-card"></div>
       <div class="skeleton-card"></div>
+    </div>
+
+    <div v-if="searchTerm">
+      <div
+        class="no-search-result"
+        v-if="Array.isArray(filteredNotes) && filteredNotes.length == 0"
+      >
+        <h1>No result found</h1>
+      </div>
+    </div>
+    <div v-else>
+      <div class="empty-state" v-if="Array.isArray(notes) && notes.length == 0">
+        <h1>No notes available</h1>
+      </div>
     </div>
   </div>
 </template>

@@ -1,29 +1,33 @@
 <template>
   <div id="app">
-    <Navbar @input-data="updateTerm" />
-    <div class="loader" v-if="user">Loading</div>
-    <router-view :searchTerm="searchTerm" />
-    <Footer />
+    <Loader v-if="loader" />
+    <div v-else>
+      <Navbar @input-data="updateTerm" />
+      <router-view :searchTerm="searchTerm" />
+      <Footer />
+    </div>
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Loader from "@/components/Loader";
 import db from "@/firebase/init";
 
 export default {
   name: "App",
   components: {
     Navbar,
-    Footer
+    Footer,
+    Loader
   },
   data() {
     return {
       searchTerm: "",
       refreshing: false,
       registration: null,
-      user: null
+      loader: false
     };
   },
   methods: {
@@ -36,6 +40,10 @@ export default {
         return;
       }
       this.registration.waiting.postMessage("skipWaiting");
+    },
+    loading() {
+      console.log("loading");
+      this.loader = false;
     }
   },
   created() {
@@ -57,6 +65,12 @@ export default {
         console.log("persistence is not available");
       }
     });
+  },
+  mounted() {
+    this.loader = true;
+  },
+  watch: {
+    $route: "loading"
   }
 };
 </script>

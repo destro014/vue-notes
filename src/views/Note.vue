@@ -27,7 +27,7 @@
           </svg>
         </div>
 
-        <div
+        <button
           class="save-btn-disabled"
           :class="{ 'save-btn': noteEdited }"
           @click="update(note)"
@@ -44,7 +44,7 @@
             </svg>
           </div>
           {{ updateStatus }}
-        </div>
+        </button>
       </div>
     </div>
     <div class="note-taking-area" v-if="note">

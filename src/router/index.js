@@ -38,7 +38,6 @@ const routes = [
     component: Login,
     beforeEnter: (to, from, next) => {
       firebase.auth().onAuthStateChanged(function(user) {
-        // let user = firebase.auth().currentUser;
         if (user) {
           next({ name: "Home" });
         } else {
@@ -54,17 +53,12 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
-// setTimeout(() => {
 router.beforeEach((to, from, next) => {
-  //check if router requires auth
   if (to.matched.some(rec => rec.meta.requiresAuth)) {
-    //check auth state of user
     firebase.auth().onAuthStateChanged(function(user) {
-      // let user = firebase.auth().currentUser;
       if (user) {
         next();
       } else {
-        // no user signed
         next({ name: "Login" });
       }
     });
@@ -72,5 +66,4 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-// }, 50);
 export default router;

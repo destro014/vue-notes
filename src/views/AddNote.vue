@@ -9,7 +9,7 @@
           <p>Your notes</p>
         </div>
       </router-link>
-      <div
+      <button
         class="save-btn-disabled"
         @click="addNote"
         :class="{ 'save-btn': title }"
@@ -26,7 +26,7 @@
           </svg>
         </div>
         {{ saveStatus }}
-      </div>
+      </button>
     </div>
     <div class="note-taking-area">
       <div class="title">
