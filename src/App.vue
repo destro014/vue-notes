@@ -20,14 +20,14 @@ export default {
   components: {
     Navbar,
     Footer,
-    Loader
+    Loader,
   },
   data() {
     return {
       searchTerm: "",
       refreshing: false,
       registration: null,
-      loader: false
+      loader: false,
     };
   },
   methods: {
@@ -41,10 +41,6 @@ export default {
       }
       this.registration.waiting.postMessage("skipWaiting");
     },
-    loading() {
-      console.log("loading");
-      this.loader = false;
-    }
   },
   created() {
     document.addEventListener("swUpdated", this.refreshApp, { once: true });
@@ -70,8 +66,13 @@ export default {
     this.loader = true;
   },
   watch: {
-    $route: "loading"
-  }
+    $route(to, from) {
+      document.title = to.params.note_slug
+        ? to.params.note_slug + " || " + to.meta.title
+        : to.meta.title;
+      this.loader = false;
+    },
+  },
 };
 </script>
 

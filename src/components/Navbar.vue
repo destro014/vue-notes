@@ -80,7 +80,7 @@ export default {
     return {
       searchTerm: "",
       showSearch: true,
-      user: null
+      user: null,
     };
   },
   methods: {
@@ -95,7 +95,7 @@ export default {
         .then(() => {
           this.$router.push({ name: "Login" });
         });
-    }
+    },
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
@@ -103,14 +103,22 @@ export default {
         this.user = user;
       } else this.user = null;
     });
+    if (this.$route.path != "/") {
+      this.showSearch = false;
+    } else this.showSearch = true;
   },
   watch: {
     $route() {
       if (this.$route.path != "/") {
         this.showSearch = false;
       } else this.showSearch = true;
-    }
-  }
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.user = user;
+        } else this.user = null;
+      });
+    },
+  },
 };
 </script>
 

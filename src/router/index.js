@@ -12,16 +12,18 @@ const routes = [
     name: "Home",
     component: Home,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+      title: "Destro's Notes",
+    },
   },
   {
     path: "/addnote",
     name: "AddNote",
     component: AddNote,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+      title: "Add Note : Destro' s Note",
+    },
   },
 
   {
@@ -29,29 +31,23 @@ const routes = [
     name: "Note",
     component: Note,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+      title: "Destro's Notes",
+    },
   },
   {
     path: "/login",
     name: "Login",
     component: Login,
-    beforeEnter: (to, from, next) => {
-      firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          next({ name: "Home" });
-        } else {
-          // no user signed
-          next();
-        }
-      });
-    }
-  }
+    meta: {
+      title: "Login : Destro' s Note",
+    },
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
 });
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.requiresAuth)) {

@@ -106,7 +106,7 @@ export default {
       passwordType: "password",
       loggingIn: false,
       loginText: "Login",
-      user: false
+      user: false,
     };
   },
 
@@ -122,7 +122,9 @@ export default {
             .auth()
             .signInWithEmailAndPassword(doc.data().email, this.password)
             .then(() => {
-              this.$router.push({ name: "Home" });
+              setTimeout(() => {
+                this.$router.push({ name: "Home" });
+              }, 500);
             })
             .catch(err => {
               this.feedback = err.message;
@@ -150,8 +152,25 @@ export default {
       } else {
         this.passwordType = "password";
       }
-    }
-  }
+    },
+  },
+  created() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.user = user;
+      } else this.user = null;
+    });
+  },
+  watch: {
+    user: function() {
+      console.log("hellop");
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.user = user;
+        } else this.user = null;
+      });
+    },
+  },
 };
 </script>
 
