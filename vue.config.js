@@ -6,7 +6,7 @@ module.exports = {
       swSrc: "./src/sw.js",
       swDest: "service-worker.js",
     },
-    name: "Destro Notes",
+    name: "Destro's Notes",
     themeColor: "#0a96f8",
     backgroundColor: "#ffffff",
     msTileColor: "#ffffff",

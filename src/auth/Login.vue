@@ -106,7 +106,7 @@ export default {
       passwordType: "password",
       loggingIn: false,
       loginText: "Login",
-      user: false,
+      user: false
     };
   },
 
@@ -152,7 +152,7 @@ export default {
       } else {
         this.passwordType = "password";
       }
-    },
+    }
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
@@ -169,8 +169,8 @@ export default {
           this.user = user;
         } else this.user = null;
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

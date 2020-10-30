@@ -20,14 +20,14 @@ export default {
   components: {
     Navbar,
     Footer,
-    Loader,
+    Loader
   },
   data() {
     return {
       searchTerm: "",
       refreshing: false,
       registration: null,
-      loader: false,
+      loader: false
     };
   },
   methods: {
@@ -40,7 +40,7 @@ export default {
         return;
       }
       this.registration.waiting.postMessage("skipWaiting");
-    },
+    }
   },
   created() {
     document.addEventListener("swUpdated", this.refreshApp, { once: true });
@@ -71,8 +71,8 @@ export default {
         ? to.params.note_slug + " || " + to.meta.title
         : to.meta.title;
       this.loader = false;
-    },
-  },
+    }
+  }
 };
 </script>
 
