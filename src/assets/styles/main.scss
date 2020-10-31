@@ -1,8 +1,8 @@
 @import "reboot";
 @import "variables";
-@import "typography";
-@import "functions";
 @import "mixins";
+@import "functions";
+@import "typography";
 
 @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
   html {
@@ -279,7 +279,7 @@ button {
   }
   .notes {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: 24px;
     row-gap: 24px;
     margin-top: 24px;
@@ -294,10 +294,12 @@ button {
       .title {
         font-size: 16px;
         font-weight: 700;
+        overflow: hidden;
       }
       .content {
         margin-top: 8px;
         font-size: 14px;
+        overflow: hidden;
         color: getColor(grey);
         p {
           margin: 0;
@@ -737,7 +739,7 @@ button {
 }
 @media only screen and (max-width: 1026px) {
   .index .notes {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 24px;
     row-gap: 24px;
   }
@@ -778,7 +780,7 @@ button {
       }
     }
     .notes {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
     }
     .skeleton {
       grid-template-columns: 1fr;
