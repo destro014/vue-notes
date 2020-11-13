@@ -1,5 +1,5 @@
 <template>
-  <div class="index container">
+  <div class="page container">
     <div class="info">
       <div class="info-title">
         <p>Your notes</p>
@@ -171,7 +171,7 @@ export default {
   methods: {
     snippet(val) {
       if (!val || typeof val != "string") return "";
-      val = val.slice(0, 50);
+      val = val.slice(0, 56);
       return val;
     }
   }

@@ -4,181 +4,54 @@
 @import "functions";
 @import "typography";
 
-@media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
-  html {
-    @include includeLight;
-  }
+@import "global";
 
-  html.dark {
-    @include includeDark;
-  }
-}
+@import "navbar";
+@import "login";
+@import "home";
+@import "note";
+@import "footer";
 
-@media (prefers-color-scheme: dark) {
-  html {
-    @include includeDark;
-  }
-
-  html.light {
-    @include includeLight;
-  }
+.page {
+  height: auto;
+  min-height: calc(100vh - 158px);
 }
-
-body {
-  width: 100%;
-  height: 100vh;
-  background-color: getColor(background-secondary);
-  color: getColor(text-primary);
-}
-
-.container {
-  padding-left: 80px;
-  padding-right: 80px;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1920px;
-}
-
-a {
-  text-decoration: none;
-  &:visited {
-    color: getColor(primary);
-  }
-}
-svg {
-  vertical-align: top;
-}
-button {
-  outline: none;
-  border: none;
-}
-.success {
-  background: getColor(success) !important;
-}
-.nav {
-  height: 76px;
-  padding-top: 16px;
-  padding-bottom: 16px;
+.info {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  .brand {
-    height: 24px;
-    width: auto;
-    a {
-      display: inline-block;
-    }
-    svg {
-      height: 24px;
-    }
+  min-height: 48px;
+  p {
+    font-size: 16px;
+    font-weight: bold;
+    color: getColor(grey);
   }
-  .search {
-    width: 40%;
-    border-radius: 8px;
-    position: relative;
-    svg {
-      position: absolute;
-      top: 12px;
-      left: 8px;
-      stroke: getColor(grey);
-      width: 20px;
-      height: 20px;
-      fill: none;
-      stroke-linecap: round;
-      stroke-width: 2;
-      stroke-linejoin: round;
-    }
-
-    input {
-      border: 1px solid transparent;
-      width: 100%;
-      margin: 0;
-      padding: 12px 12px 12px 32px;
-      border-radius: 8px;
-      background-color: getColor(background-tertary);
-      color: getColor(text-primary);
-      &:focus {
-        outline: none;
-        border: 1px solid getColor(primary);
-        box-shadow: 0px 12px 24px -10px rgba(0, 0, 0, 0.2);
-      }
-      &::placeholder {
-        color: getColor(grey);
-        font-weight: 500;
-      }
-    }
-  }
-  .logout {
-    width: auto;
-    height: 40px;
+  .info-title {
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
-    cursor: pointer;
-    svg {
-      stroke: getColor(grey);
-      width: 20px;
-      height: 20px;
-      fill: none;
-      stroke-linecap: round;
-      stroke-width: 2;
-      stroke-linejoin: round;
-    }
-    span {
-      margin-left: 5px;
-      font-weight: 500;
+    p {
+      font-size: 16px;
+      font-weight: bold;
       color: getColor(grey);
     }
-  }
-}
-
-.login {
-  width: 100%;
-  max-width: 640px;
-  height: auto;
-  min-height: calc(100vh - 178px);
-  margin-top: 24px;
-  form {
-    margin-top: 80px;
-  }
-  label {
-    position: absolute;
-    font-size: 14px;
-    top: -24px;
-    color: getColor(grey);
-    display: block;
-  }
-  .input-group {
-    margin-bottom: 48px;
-    position: relative;
-    input {
-      width: 100%;
-      padding: 16px 16px 16px 48px;
-      outline: none;
-      background: getColor(background-primary);
-      color: getColor(text-primary);
-      border: 1px solid transparent;
-      border-radius: 8px;
-      &:focus,
-      &:active {
-        border-color: getColor(primary);
-        ~ label {
-          color: getColor(primary);
-        }
-        ~ svg {
-          stroke: getColor(primary);
-        }
-        ~ .show,
-        ~ .hide {
-          stroke: getColor(grey) !important;
-        }
-      }
-    }
     svg {
-      position: absolute;
-      top: 14px;
-      left: 14px;
+      width: 16px;
+      height: 16px;
+      fill: none;
       stroke: getColor(grey);
+      stroke-linecap: round;
+      stroke-width: 4;
+      stroke-linejoin: round;
+      margin-right: 8px;
+    }
+  }
+  .new-btn {
+    padding: 12px;
+    svg {
+      stroke: getColor(primary);
       width: 24px;
       height: 24px;
       fill: none;
@@ -186,522 +59,50 @@ button {
       stroke-width: 2;
       stroke-linejoin: round;
     }
-    .show,
-    .hide {
-      cursor: pointer;
-      right: 8px;
-      left: auto;
-    }
-  }
-  .feedback {
-    color: getColor(danger);
-    margin-top: -24px;
-    margin-bottom: 24px;
-    text-align: center;
-  }
-  .submit-btn-disabled {
-    outline: none;
-    border: none;
-    width: 100%;
-    background: getColor(background-tertary);
-    color: getColor(grey);
-    padding: 16px 32px;
-    border-radius: 5px;
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 14px;
-    cursor: default;
-    pointer-events: none;
-  }
-  .submit-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: getColor(light);
-    background: getColor(primary);
-    cursor: pointer;
-    pointer-events: visible;
-    &:hover {
-      box-shadow: 0 6px 12px -4px rgba(10, 150, 248, 0.16);
-    }
-  }
-}
-.empty-state,
-.no-search-result {
-  color: getColor(grey);
-  text-align: center;
-  margin-top: 40px;
-}
-.index {
-  height: auto;
-  min-height: calc(100vh - 158px);
-
-  .info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    p {
-      font-size: 16px;
-      font-weight: bold;
-      color: getColor(grey);
-    }
-    .new-btn {
-      svg {
-        stroke: getColor(primary);
-        width: 24px;
-        height: 24px;
-        fill: none;
-        stroke-linecap: round;
-        stroke-width: 2;
-        stroke-linejoin: round;
-      }
-      a {
-        &:visited {
-          color: getColor(primary);
-        }
-      }
-    }
-  }
-  .skeleton {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 24px;
-    row-gap: 24px;
-    margin-top: 24px;
-    .skeleton-card {
-      background: getColor(background-primary);
-      height: 122px;
-      padding: 20px;
-      border-radius: 8px;
-      transition: all ease-in 0.1s;
-    }
-  }
-  .notes {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 24px;
-    row-gap: 24px;
-    margin-top: 24px;
-    .note {
-      background: getColor(background-primary);
-      padding: 20px;
-      border-radius: 8px;
-      transition: all ease-in 0.1s;
-      &:hover {
-        box-shadow: 0px 12px 24px -8px rgba(0, 0, 0, 0.2);
-      }
-      .title {
-        font-size: 16px;
-        font-weight: 700;
-        overflow: hidden;
-      }
-      .content {
-        margin-top: 8px;
-        font-size: 14px;
-        overflow: hidden;
-        color: getColor(grey);
-        p {
-          margin: 0;
-        }
-      }
-      .last-edited {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        color: getColor(grey);
-        font-size: 14px;
-        margin-top: 20px;
-        svg {
-          stroke: getColor(grey);
-          width: 16px;
-          height: 16px;
-          fill: none;
-          stroke-linecap: round;
-          stroke-width: 2;
-          stroke-linejoin: round;
-        }
-        .date {
-          display: flex;
-          align-items: center;
-          margin-right: 30px;
-        }
-        .time {
-          display: flex;
-          align-items: center;
-        }
-        span {
-          margin-left: 5px;
-        }
-      }
-    }
     a {
-      color: getColor(text-primary);
-    }
-  }
-}
-.add-note {
-  height: auto;
-  min-height: calc(100vh - 158px);
-
-  .info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    height: 48px;
-    .info-title {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      align-items: center;
-      p {
-        font-size: 16px;
-        font-weight: bold;
-        color: getColor(grey);
-      }
-      svg {
-        width: 16px;
-        height: 16px;
-        fill: none;
-        stroke: getColor(grey);
-        stroke-linecap: round;
-        stroke-width: 4;
-        stroke-linejoin: round;
-        margin-right: 8px;
-      }
-    }
-    a {
-      color: getColor(text-primary);
       &:visited {
-        color: getColor(text-primary);
-      }
-    }
-  }
-  .save-btn-disabled {
-    width: 144px;
-    background: getColor(grey);
-    padding: 8px 16px;
-    height: 48px;
-    border-radius: 4px;
-    color: getColor(light);
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 14px;
-    cursor: default;
-    display: none;
-  }
-  .save-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: getColor(primary);
-    cursor: pointer;
-    &:hover {
-      box-shadow: 0 6px 12px -4px rgba(10, 150, 248, 0.16);
-    }
-  }
-  .circle {
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-    margin-right: 8px;
-    border-radius: 50%;
-    border-top: 2px solid getColor(light);
-    border-right: 2px solid transparent;
-    animation: spinner 0.6s linear infinite;
-  }
-  @keyframes spinner {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .note-taking-area {
-    margin-top: 24px;
-    .title {
-      input {
-        width: 100%;
-        font-size: 40px;
-        background: transparent;
-        border: none;
-        border-bottom: 2px solid getColor(grey);
-        color: getColor(text-primary);
-        font-weight: 700;
-        padding: 0 20px;
-        &:focus {
-          outline: none;
-          border-bottom: 2px solid getColor(text-primary);
-        }
-      }
-    }
-    .note-typed {
-      margin-top: 20px;
-      textarea {
-        background: getColor(background-primary);
-        color: getColor(text-primary);
-        border-radius: 20px;
-        width: 100%;
-        padding: 20px;
-        border: none;
-        min-height: 500px;
-        max-height: 800px;
-        font-weight: 500;
-        resize: none;
-        &:focus {
-          outline: none;
-          box-shadow: 0px 24px 24px -24px rgba(0, 0, 0, 0.2);
-        }
-        &::placeholder {
-          font-weight: 500;
-        }
+        color: getColor(primary);
       }
     }
   }
 }
-.note-view {
-  height: auto;
-  min-height: calc(100vh - 158px);
-  .info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    .info-title {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      align-items: center;
-      p {
-        font-size: 16px;
-        font-weight: bold;
-        color: getColor(grey);
-      }
-      svg {
-        width: 16px;
-        height: 16px;
-        fill: none;
-        stroke: getColor(grey);
-        stroke-linecap: round;
-        stroke-width: 4;
-        stroke-linejoin: round;
-        margin-right: 8px;
-      }
-    }
-    a {
-      color: getColor(text-primary);
-      &::visited {
-        color: getColor(text-primary) !important;
-      }
-    }
+.skeleton {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 24px;
+  row-gap: 24px;
+  margin-top: 24px;
+  .skeleton-card {
+    background: getColor(background-primary);
+    height: 122px;
+    padding: 20px;
+    border-radius: 8px;
+    transition: all ease-in 0.1s;
   }
-  .cta-btn {
-    display: flex;
-  }
-  .save-btn-disabled {
-    width: 144px;
-    background: getColor(grey);
-    padding: 8px 16px;
-    border-radius: 4px;
-    color: getColor(light);
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 14px;
-    cursor: default;
-    display: none;
-    margin-left: 20px;
-  }
-  .save-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: getColor(primary);
-    cursor: pointer;
-  }
+}
 
-  @keyframes spinner {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .delete-btn {
-    fill: none;
-    stroke: getColor(danger);
-    stroke-linecap: round;
-    stroke-width: 2;
-    stroke-linejoin: round;
-    padding: 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    &:hover {
-      box-shadow: 0 6px 12px -4px rgba(198, 40, 40, 0.2);
-    }
-  }
-  .note-taking-area {
-    margin-top: 24px;
-    .title {
-      input {
-        width: 100%;
-        font-size: 40px;
-        background: transparent;
-        border: 2px solid transparent;
-        color: getColor(text-primary);
-        font-weight: 700;
-        padding: 0 20px;
-        &:focus {
-          outline: none;
-          border-bottom: 2px solid getColor(text-primary);
-        }
-      }
-    }
-    .note-typed {
-      margin-top: 20px;
-      textarea {
-        background: getColor(background-primary);
-        color: getColor(text-primary);
-        border-radius: 24px;
-        width: 100%;
-        padding: 20px;
-        border: none;
-        min-height: 500px;
-        max-height: 800px;
-        font-weight: 500;
-        resize: none;
-        &:focus {
-          outline: none;
-          box-shadow: 0px 24px 24px -24px rgba(0, 0, 0, 0.2);
-        }
-        &::placeholder {
-          font-weight: 500;
-        }
-      }
-    }
-  }
-  .note-skeleton {
-    .title-skeleton {
-      background: getColor(background-primary);
-      height: 50px;
-      width: 100%;
-      border-radius: 24px;
-      margin-bottom: 24px;
-      margin-top: 24px;
-    }
-    .note-taking-skeleton {
-      min-height: 500px;
-      max-height: 800px;
-      background: getColor(background-primary);
-      border-radius: 24px;
-    }
-  }
-  .delete-popup {
-    width: 100%;
-    height: 100vh;
-    background: rgba(2, 4, 20, 0.4);
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: down 0.5s ease-in;
-    .delete-dialog {
-      background: getColor(background-tertary);
-      width: 40%;
-      height: auto;
-      padding: 20px;
-      border-radius: 20px;
-      overflow: hidden;
-      .bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        h3 {
-          margin: 0;
-        }
-        .cross {
-          stroke: getColor(grey);
-          fill: none;
-          stroke-width: 2;
-          stroke-linecap: round;
-          stroke-linejoin: round;
-          margin: 0;
-          padding: 8px;
-          cursor: pointer;
-          svg {
-            width: 24px;
-            height: 24px;
-          }
-        }
-      }
-      .alert {
-        display: flex;
-        color: getColor(danger);
-        background: getColor(danger-light);
-        justify-content: center;
-        align-items: flex-start;
-        margin-top: 30px;
-        border-radius: 5px;
-        line-height: 24px;
-        padding: 24px;
-        svg {
-          flex-grow: 0;
-          flex-shrink: 0;
-          width: 24px;
-          height: 24px;
-          fill: none;
-          stroke: getColor(danger);
-          stroke-linecap: round;
-          stroke-width: 2;
-          stroke-linejoin: round;
-          margin-right: 8px;
-        }
-        .danger {
-          text-align: center;
-          font-weight: 700;
-        }
-      }
-      .question {
-        margin-top: 30px;
-        font-weight: 500;
-      }
-    }
-    .popup-btn {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 20px;
-      .btn {
-        padding: 8px 16px;
-        text-transform: uppercase;
-        font-weight: 500;
-        font-size: 14px;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      .cancel-btn {
-        color: getColor(grey);
-
-        &:hover {
-          background: getColor(background-primary);
-        }
-      }
-      .delete-approve-btn {
-        background: getColor(danger);
-        color: getColor(light);
-        margin-left: 20px;
-        &:hover {
-          background: rgb(150, 40, 40);
-        }
-      }
-    }
-    @keyframes down {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 100;
-      }
-    }
+.save-btn-disabled {
+  width: 144px;
+  background: getColor(grey);
+  padding: 8px 16px;
+  height: 48px;
+  border-radius: 4px;
+  color: getColor(light);
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: default;
+  display: none;
+  margin-left: 16px;
+}
+.save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: getColor(primary);
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 6px 12px -4px rgba(10, 150, 248, 0.16);
   }
 }
 .circle {
@@ -719,6 +120,62 @@ button {
     transform: rotate(360deg);
   }
 }
+
+.note-taking-area {
+  margin-top: 24px;
+  .title {
+    input {
+      width: 100%;
+      font-size: 40px;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid getColor(grey);
+      color: getColor(text-primary);
+      font-weight: 700;
+      padding: 0 20px;
+      &:focus {
+        outline: none;
+        border-bottom: 2px solid getColor(text-primary);
+      }
+    }
+  }
+  .note-typed {
+    margin-top: 20px;
+    textarea {
+      background: getColor(background-primary);
+      color: getColor(text-primary);
+      border-radius: 20px;
+      line-height: 24px;
+      width: 100%;
+      padding: 20px;
+      border: none;
+      min-height: 500px;
+      max-height: 800px;
+      font-weight: 500;
+      resize: none;
+      &:focus {
+        outline: none;
+        box-shadow: 0px 24px 24px -24px rgba(0, 0, 0, 0.2);
+      }
+      &::placeholder {
+        font-weight: 500;
+      }
+    }
+  }
+}
+.delete-btn {
+  fill: none;
+  stroke: getColor(danger);
+  stroke-linecap: round;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 6px 12px -4px rgba(198, 40, 40, 0.2);
+  }
+}
 .check {
   margin-right: 8px;
   fill: none;
@@ -731,100 +188,35 @@ button {
     height: 16px;
   }
 }
-.footer {
-  padding: 32px 0;
-  color: getColor(grey);
-  text-align: center;
-  vertical-align: middle;
-}
-@media only screen and (max-width: 1026px) {
-  .index .notes {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 24px;
-    row-gap: 24px;
-  }
-}
+
 @media only screen and (max-width: 768px) {
-  .container {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-  .nav {
-    height: auto;
-    .brand {
-      order: 1;
-      img {
-        height: 30px;
-        margin-top: 5px;
-      }
-    }
-    .search {
-      order: 3;
-      width: 100%;
-      flex-grow: 1;
-      margin-top: 8px;
-      input {
-        width: 100%;
-      }
-    }
-    .logout {
-      order: 2;
-    }
+  .page {
+    min-height: calc(100vh - 208px);
   }
 
-  .index {
-    min-height: calc(100vh - 208px);
-    .info {
-      .new-btn {
-        font-size: 16px;
-      }
-    }
-    .notes {
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
-    .skeleton {
-      grid-template-columns: 1fr;
+  .info {
+    .new-btn {
+      font-size: 16px;
     }
   }
-  .add-note {
-    .note-taking-area {
-      .title {
-        input {
-          font-size: 24px;
-          padding: 0 8px;
-          width: 100%;
-        }
-      }
-    }
+  .notes {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
-  .note {
-    .note-taking-area {
-      .title {
-        input {
-          font-size: 18px;
-          padding: 0 8px;
-          width: 100%;
-        }
-      }
-    }
-    .save-btn-disabled {
-      width: 144px;
-      padding: 8px 16px;
-      margin-left: 16px;
-    }
-    .delete-btn {
-      padding: 8px 8px;
-    }
+  .skeleton {
+    grid-template-columns: 1fr;
   }
-  .note-view {
-    .delete-popup {
-      .delete-dialog {
-        width: 80%;
-        .alert {
-          .danger {
-            padding: 0 8px 0 0;
-          }
-        }
+
+  .save-btn-disabled {
+    width: 144px;
+    padding: 8px 16px;
+    margin-left: 16px;
+  }
+  .note-taking-area {
+    .title {
+      input {
+        font-size: 18px;
+        padding: 0 8px;
+        width: 100%;
       }
     }
   }

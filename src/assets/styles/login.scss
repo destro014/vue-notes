@@ -1,0 +1,94 @@
+.login {
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    min-height: calc(100vh - 178px);
+    margin-top: 24px;
+    form {
+        margin-top: 80px;
+    }
+    label {
+        position: absolute;
+        font-size: 14px;
+        top: -24px;
+        color: getColor(grey);
+        display: block;
+    }
+    .input-group {
+        margin-bottom: 48px;
+        position: relative;
+        input {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            outline: none;
+            background: getColor(background-primary);
+            color: getColor(text-primary);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            &:focus,
+            &:active {
+                border-color: getColor(primary);
+                ~ label {
+                    color: getColor(primary);
+                }
+                ~ svg {
+                    stroke: getColor(primary);
+                }
+                ~ .show,
+                ~ .hide {
+                    stroke: getColor(grey) !important;
+                }
+            }
+        }
+        svg {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            stroke: getColor(grey);
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke-linecap: round;
+            stroke-width: 2;
+            stroke-linejoin: round;
+        }
+        .show,
+        .hide {
+            cursor: pointer;
+            right: 8px;
+            left: auto;
+        }
+    }
+    .feedback {
+        color: getColor(danger);
+        margin-top: -24px;
+        margin-bottom: 24px;
+        text-align: center;
+    }
+    .submit-btn-disabled {
+        outline: none;
+        border: none;
+        width: 100%;
+        background: getColor(background-tertary);
+        color: getColor(grey);
+        padding: 16px 32px;
+        border-radius: 5px;
+        text-transform: uppercase;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: default;
+        pointer-events: none;
+    }
+    .submit-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: getColor(light);
+        background: getColor(primary);
+        cursor: pointer;
+        pointer-events: visible;
+        &:hover {
+            box-shadow: 0 6px 12px -4px rgba(10, 150, 248, 0.16);
+        }
+    }
+}

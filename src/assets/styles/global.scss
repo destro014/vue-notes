@@ -1,0 +1,61 @@
+@media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
+    html {
+        @include includeLight;
+    }
+
+    html.dark {
+        @include includeDark;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        @include includeDark;
+    }
+
+    html.light {
+        @include includeLight;
+    }
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background-color: getColor(background-secondary);
+    color: getColor(text-primary);
+}
+
+.container {
+    padding-left: 80px;
+    padding-right: 80px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1920px;
+}
+
+a {
+    text-decoration: none;
+    &:visited {
+        color: getColor(primary);
+    }
+}
+svg {
+    vertical-align: top;
+}
+button {
+    outline: none;
+    border: none;
+}
+
+.empty-state,
+.no-search-result {
+    color: getColor(grey);
+    text-align: center;
+    margin-top: 40px;
+}
+@media only screen and (max-width: 768px) {
+    .container {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}

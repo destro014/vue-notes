@@ -1,0 +1,100 @@
+.nav {
+    height: 76px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    .brand {
+        height: 24px;
+        width: auto;
+        a {
+            display: inline-block;
+        }
+        svg {
+            height: 24px;
+        }
+    }
+    .search {
+        width: 40%;
+        border-radius: 8px;
+        position: relative;
+        svg {
+            position: absolute;
+            top: 12px;
+            left: 8px;
+            stroke: getColor(grey);
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke-linecap: round;
+            stroke-width: 2;
+            stroke-linejoin: round;
+        }
+
+        input {
+            border: 1px solid transparent;
+            width: 100%;
+            margin: 0;
+            padding: 12px 12px 12px 32px;
+            border-radius: 8px;
+            background-color: getColor(background-tertary);
+            color: getColor(text-primary);
+            &:focus {
+                outline: none;
+                border: 1px solid getColor(primary);
+                box-shadow: 0px 12px 24px -10px rgba(0, 0, 0, 0.2);
+            }
+            &::placeholder {
+                color: getColor(grey);
+                font-weight: 500;
+            }
+        }
+    }
+    .logout {
+        width: auto;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        svg {
+            stroke: getColor(grey);
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke-linecap: round;
+            stroke-width: 2;
+            stroke-linejoin: round;
+        }
+        span {
+            margin-left: 5px;
+            font-weight: 500;
+            color: getColor(grey);
+        }
+    }
+}
+@media only screen and (max-width: 768px) {
+    .nav {
+        height: auto;
+        .brand {
+            order: 1;
+            img {
+                height: 30px;
+                margin-top: 5px;
+            }
+        }
+        .search {
+            order: 3;
+            width: 100%;
+            flex-grow: 1;
+            margin-top: 8px;
+            input {
+                width: 100%;
+            }
+        }
+        .logout {
+            order: 2;
+        }
+    }
+}

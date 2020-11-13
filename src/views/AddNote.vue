@@ -1,5 +1,5 @@
 <template>
-  <div class="add-note container">
+  <div class="page  container">
     <div class="info">
       <router-link :to="{ name: 'Home' }">
         <div class="info-title">
