@@ -205,17 +205,17 @@ export default {
             ],
             time: new Date().getTime() / 1000
           })
-          .then(() => {
-            this.updating = false;
-            this.updated = true;
-            this.updateStatus = "Updated";
-            setTimeout(() => {
-              this.$router.push({ name: "Home" });
-            }, 500);
-          })
           .catch(err => {
             console.log(err);
           });
+        setTimeout(() => {
+          this.updating = false;
+          this.updated = true;
+          this.updateStatus = "Updated";
+          setTimeout(() => {
+            this.$router.push({ name: "Home" });
+          }, 500);
+        }, 500);
       }
     },
     deletePopup() {
