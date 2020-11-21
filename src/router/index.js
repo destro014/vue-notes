@@ -13,8 +13,8 @@ const routes = [
     component: Home,
     meta: {
       requiresAuth: true,
-      title: "Destro's Notes",
-    },
+      title: "Destro's Notes"
+    }
   },
   {
     path: "/addnote",
@@ -22,8 +22,8 @@ const routes = [
     component: AddNote,
     meta: {
       requiresAuth: true,
-      title: "Add Note : Destro' s Note",
-    },
+      title: "Add Note : Destro' s Note"
+    }
   },
 
   {
@@ -32,22 +32,32 @@ const routes = [
     component: Note,
     meta: {
       requiresAuth: true,
-      title: "Destro's Notes",
-    },
+      title: "Destro's Notes"
+    }
   },
   {
     path: "/login",
     name: "Login",
     component: Login,
     meta: {
-      title: "Login : Destro' s Note",
-    },
-  },
+      title: "Login : Destro' s Note"
+    }
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
+  mode: "history",
+  base: process.env.BASE_URL,
+  duplicateNavigationPolicy: "ignore",
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  }
 });
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.requiresAuth)) {
