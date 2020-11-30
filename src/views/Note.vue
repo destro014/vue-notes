@@ -53,7 +53,7 @@
           type="text"
           placeholder="title"
           v-model="note.title"
-          @keyup="edited()"
+          @input="edited()"
         />
       </div>
       <div class="note-typed">
@@ -61,7 +61,7 @@
           name="note"
           placeholder="type your note here"
           v-model="note.content"
-          @keyup="edited()"
+          @input="edited()"
         ></textarea>
       </div>
     </div>
@@ -141,13 +141,13 @@ export default {
         "Sept",
         "Oct",
         "Nov",
-        "Dec"
+        "Dec",
       ],
       day: null,
       hour: null,
       minute: null,
       meridian: null,
-      noteEdited: null
+      noteEdited: null,
     };
   },
   methods: {
@@ -166,7 +166,7 @@ export default {
         this.note.slug = slugify(this.note.title, {
           replacement: "-",
           remove: /[$*_+~.()'"!\-:@]/g,
-          lower: true
+          lower: true,
         });
         //creating date and time
         this.year = new Date().getFullYear();
@@ -201,9 +201,9 @@ export default {
               this.day,
               this.hour,
               this.minute,
-              this.meridian
+              this.meridian,
             ],
-            time: new Date().getTime() / 1000
+            time: new Date().getTime() / 1000,
           })
           .catch(err => {
             console.log(err);
@@ -231,7 +231,7 @@ export default {
       setTimeout(() => {
         this.$router.push({ name: "Home" });
       }, 500);
-    }
+    },
   },
   created() {
     let ref = db
@@ -245,7 +245,7 @@ export default {
         this.content = this.note.content;
       });
     });
-  }
+  },
 };
 </script>
 
