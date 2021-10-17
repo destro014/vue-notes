@@ -33,11 +33,13 @@
         <input type="text" placeholder="title" v-model="title" />
       </div>
       <div class="note-typed">
-        <textarea
+        <QuillEditor theme="snow" />
+
+        <!-- <textarea
           name="note"
           placeholder="type your note here"
           v-model="content"
-        ></textarea>
+        ></textarea> -->
       </div>
     </div>
   </div>
@@ -46,15 +48,32 @@
 <script>
 import db from "@/firebase/init";
 import slugify from "slugify";
-
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 export default {
   name: "AddNote",
+  components: {
+    QuillEditor,
+  },
   data() {
     return {
       title: null,
       content: null,
       moment: [],
       slug: null,
+      editorOption: {
+        placeholder: "Enter job description",
+        theme: "snow",
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            ["bold", "italic", "underline", "strike"],
+            [{ align: [] }],
+            [{ list: "bullet" }, { list: "ordered" }],
+            ["link", "image"],
+          ],
+        },
+      },
       monthNames: [
         "Jan",
         "Feb",
@@ -67,7 +86,7 @@ export default {
         "Sept",
         "Oct",
         "Nov",
-        "Dec"
+        "Dec",
       ],
       year: null,
       month: null,
@@ -77,7 +96,7 @@ export default {
       meridian: null,
       saveStatus: "Save",
       saving: false,
-      saved: false
+      saved: false,
     };
   },
   methods: {
@@ -89,7 +108,7 @@ export default {
         this.slug = slugify(this.title, {
           replacement: "-",
           remove: /[$*_+~.()'"!\-:@]/g,
-          lower: true
+          lower: true,
         });
         //creating date and time
         this.year = new Date().getFullYear();
@@ -124,9 +143,9 @@ export default {
               this.day,
               this.hour,
               this.minute,
-              this.meridian
+              this.meridian,
             ],
-            time: new Date().getTime() / 1000
+            time: new Date().getTime() / 1000,
           })
           .catch(err => {
             console.log(err);
@@ -140,8 +159,8 @@ export default {
           }, 500);
         }, 500);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
