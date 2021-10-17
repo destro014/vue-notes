@@ -20,7 +20,7 @@
         </router-link>
       </div>
     </div>
-    <div class="notes" v-if="notes">
+    <div class="notes" v-if="notes.length > 0">
       <div
         class="note"
         v-for="note in filteredNotes.slice().reverse()"
@@ -117,18 +117,18 @@
       <div class="skeleton-card"></div>
       <div class="skeleton-card"></div>
       <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
     </div>
 
     <div v-if="searchTerm">
-      <div
-        class="no-search-result"
-        v-if="Array.isArray(filteredNotes) && filteredNotes.length == 0"
-      >
+      <div class="no-search-result" v-if="filteredNotes.length == 0">
         <h1>No result found</h1>
       </div>
     </div>
     <div v-else>
-      <div class="empty-state" v-if="Array.isArray(notes) && notes.length == 0">
+      <div class="empty-state" v-if="noNotes">
         <h1>No notes available</h1>
       </div>
     </div>
@@ -136,6 +136,7 @@
 </template>
 
 <script>
+import { collection, query, orderBy, getDocs } from "firebase/firestore";
 import db from "@/firebase/init";
 
 export default {
@@ -143,7 +144,8 @@ export default {
   props: ["searchTerm"],
   data() {
     return {
-      notes: null
+      notes: [],
+      noNotes: false,
     };
   },
   computed: {
@@ -154,27 +156,27 @@ export default {
           note.content.toLowerCase().match(this.searchTerm)
         );
       });
-    }
+    },
   },
-  mounted() {
-    db.collection("notes")
-      .orderBy("time")
-      .onSnapshot(snapshot => {
-        this.notes = [];
-        snapshot.forEach(doc => {
-          let note = doc.data();
-          note.id = doc.id;
-          this.notes.push(note);
-        });
-      });
+  async mounted() {
+    const q = query(collection(db, "notes"), orderBy("time"));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(doc => {
+      let note = doc.data();
+      note.id = doc.id;
+      this.notes.push(note);
+    });
+    if (querySnapshot.size == 0) {
+      this.noNotes == true;
+    }
   },
   methods: {
     snippet(val) {
       if (!val || typeof val != "string") return "";
       val = val.slice(0, 56);
       return val;
-    }
-  }
+    },
+  },
 };
 </script>
 

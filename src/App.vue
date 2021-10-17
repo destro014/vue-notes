@@ -1,30 +1,88 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div id="app">
+    <Loader v-if="loader" />
+    <div v-else>
+      <Navbar @input-data="updateTerm" />
+      <Updater />
+      <router-view :searchTerm="searchTerm" />
+      <Footer />
+    </div>
   </div>
-  <router-view />
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Loader from "@/components/Loader";
+import Updater from "@/components/Updater.vue";
 
-#nav {
-  padding: 30px;
+import db from "@/firebase/init";
+import { enableIndexedDbPersistence } from "firebase/firestore";
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+  name: "App",
+  components: {
+    Navbar,
+    Footer,
+    Loader,
+    Updater,
+  },
+  data() {
+    return {
+      searchTerm: "",
+      refreshing: false,
+      registration: null,
+      loader: false,
+    };
+  },
+  methods: {
+    updateTerm(variable) {
+      this.searchTerm = variable;
+    },
+    refreshApp(e) {
+      this.registration = e.detail;
+      if (!this.registration || !this.registration.waiting) {
+        return;
+      }
+      this.registration.waiting.postMessage("skipWaiting");
+    },
+  },
+  created() {
+    document.addEventListener("swUpdated", this.refreshApp, { once: true });
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (this.refreshing) return;
+        console.log("refreshing refreshing refreshing");
+        this.refreshing = true;
+        window.location.reload();
+      });
     }
-  }
-}
+    enableIndexedDbPersistence(db).catch(err => {
+      if (err.code == "failed-precondition") {
+        // Multiple tabs open, persistence can only be enabled
+        // in one tab at a a time.
+        // ...
+      } else if (err.code == "unimplemented") {
+        // The current browser does not support all of the
+        // features required to enable persistence
+        // ...
+      }
+    });
+  },
+  mounted() {
+    this.loader = true;
+  },
+  watch: {
+    $route(to, from) {
+      document.title = to.params.note_slug
+        ? to.params.note_slug + " || " + to.meta.title
+        : to.meta.title;
+      this.loader = false;
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+@import "@/assets/styles/main.scss";
 </style>

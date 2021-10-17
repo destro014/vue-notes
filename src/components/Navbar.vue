@@ -72,7 +72,8 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+
 export default {
   name: "Navbar",
 
@@ -80,7 +81,7 @@ export default {
     return {
       searchTerm: "",
       showSearch: true,
-      user: null
+      user: null,
     };
   },
   methods: {
@@ -89,16 +90,15 @@ export default {
       // this.tempMessage = "";
     },
     logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$router.push({ name: "Login" });
-        });
-    }
+      const auth = getAuth();
+      signOut(auth).then(() => {
+        this.$router.push({ name: "Login" });
+      });
+    },
   },
   created() {
-    firebase.auth().onAuthStateChanged(user => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, user => {
       if (user) {
         this.user = user;
       } else this.user = null;
@@ -112,13 +112,14 @@ export default {
       if (this.$route.path != "/") {
         this.showSearch = false;
       } else this.showSearch = true;
-      firebase.auth().onAuthStateChanged(user => {
+      const auth = getAuth();
+      onAuthStateChanged(auth, user => {
         if (user) {
           this.user = user;
         } else this.user = null;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

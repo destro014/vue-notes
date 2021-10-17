@@ -7,6 +7,7 @@
           type="text"
           id="username"
           v-model="username"
+          autocomplete="username"
           @input="checkInput"
         />
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -25,6 +26,7 @@
           :type="passwordType"
           id="password"
           v-model="password"
+          autocomplete="current-password"
           @input="checkInput"
         />
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -90,10 +92,13 @@
 </template>
 
 <script>
-import firebase from "firebase/app";
-import "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import db from "@/firebase/init";
-
 export default {
   name: "Login",
   data() {
@@ -106,37 +111,35 @@ export default {
       passwordType: "password",
       loggingIn: false,
       loginText: "Login",
-      user: false
+      user: false,
     };
   },
 
   methods: {
-    login() {
+    async login() {
       this.feedback = null;
       this.loggingIn = true;
       this.loginText = "Logging In";
-      let ref = db.collection("users").doc(this.username);
-      ref.get().then(doc => {
-        if (doc.exists) {
-          firebase
-            .auth()
-            .signInWithEmailAndPassword(doc.data().email, this.password)
-            .then(() => {
-              setTimeout(() => {
-                this.$router.push({ name: "Home" });
-              }, 500);
-            })
-            .catch(err => {
-              this.feedback = err.message;
-              this.loggingIn = false;
-              this.loginText = "Login";
-            });
-        } else {
-          this.loggingIn = false;
-          this.loginText = "Login";
-          this.feedback = "Username doesn't exists";
-        }
-      });
+      const auth = getAuth();
+      const docRef = doc(db, "users", this.username);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        signInWithEmailAndPassword(auth, docSnap.data().email, this.password)
+          .then(() => {
+            setTimeout(() => {
+              this.$router.push({ name: "Home" });
+            }, 500);
+          })
+          .catch(err => {
+            this.feedback = err.message;
+            this.loggingIn = false;
+            this.loginText = "Login";
+          });
+      } else {
+        this.loggingIn = false;
+        this.loginText = "Login";
+        this.feedback = "Username doesn't exists";
+      }
     },
     checkInput() {
       if (this.username && this.password) {
@@ -152,25 +155,26 @@ export default {
       } else {
         this.passwordType = "password";
       }
-    }
+    },
   },
   created() {
-    firebase.auth().onAuthStateChanged(user => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, user => {
       if (user) {
         this.user = user;
       } else this.user = null;
     });
   },
   watch: {
-    user: function() {
-      console.log("hellop");
-      firebase.auth().onAuthStateChanged(user => {
+    user: function () {
+      const auth = getAuth();
+      onAuthStateChanged(auth, user => {
         if (user) {
           this.user = user;
         } else this.user = null;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

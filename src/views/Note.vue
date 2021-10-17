@@ -115,6 +115,15 @@
 
 <script>
 import db from "@/firebase/init";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import slugify from "slugify";
 export default {
   name: "Note",
@@ -158,7 +167,7 @@ export default {
         this.noteEdited = false;
       }
     },
-    update() {
+    async update() {
       if (this.note.title) {
         this.updating = true;
         this.updateStatus = "updating";
@@ -189,25 +198,21 @@ export default {
           this.hour = this.hour % 12;
           this.meridian = "P.M";
         }
-        db.collection("notes")
-          .doc(this.note.id)
-          .update({
-            title: this.note.title,
-            content: this.note.content,
-            slug: this.note.slug,
-            moment: [
-              this.year,
-              this.monthNames[this.month],
-              this.day,
-              this.hour,
-              this.minute,
-              this.meridian,
-            ],
-            time: new Date().getTime() / 1000,
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        const ref = doc(db, "notes", this.note.id);
+        await updateDoc(ref, {
+          title: this.note.title,
+          content: this.note.content,
+          slug: this.note.slug,
+          moment: [
+            this.year,
+            this.monthNames[this.month],
+            this.day,
+            this.hour,
+            this.minute,
+            this.meridian,
+          ],
+          time: new Date().getTime() / 1000,
+        });
         setTimeout(() => {
           this.updating = false;
           this.updated = true;
@@ -221,29 +226,25 @@ export default {
     deletePopup() {
       this.deleteClicked = !this.deleteClicked;
     },
-    deleteNote(id) {
-      db.collection("notes")
-        .doc(id)
-        .delete()
-        .catch(err => {
-          console.log(err);
-        });
+    async deleteNote(id) {
+      await deleteDoc(doc(db, "notes", id));
       setTimeout(() => {
         this.$router.push({ name: "Home" });
       }, 500);
     },
   },
-  created() {
-    let ref = db
-      .collection("notes")
-      .where("slug", "==", this.$route.params.note_slug);
-    ref.get().then(snapshot => {
-      snapshot.forEach(doc => {
-        this.note = doc.data();
-        this.note.id = doc.id;
-        this.title = this.note.title;
-        this.content = this.note.content;
-      });
+  async created() {
+    const q = query(
+      collection(db, "notes"),
+      where("slug", "==", this.$route.params.note_slug)
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(doc => {
+      // doc.data() is never undefined for query doc snapshots
+      this.note = doc.data();
+      this.note.id = doc.id;
+      this.title = this.note.title;
+      this.content = this.note.content;
     });
   },
 };
