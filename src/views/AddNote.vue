@@ -1,5 +1,5 @@
 <template>
-  <div class="page  container">
+  <div class="page container">
     <div class="info">
       <router-link :to="{ name: 'Home' }">
         <div class="info-title">
@@ -33,13 +33,13 @@
         <input type="text" placeholder="title" v-model="title" />
       </div>
       <div class="note-typed">
-        <QuillEditor theme="snow" />
+        <!-- <QuillEditor theme="bubble" /> -->
 
-        <!-- <textarea
+        <textarea
           name="note"
           placeholder="type your note here"
           v-model="content"
-        ></textarea> -->
+        ></textarea>
       </div>
     </div>
   </div>
@@ -47,6 +47,7 @@
 
 <script>
 import db from "@/firebase/init";
+import { collection, addDoc } from "firebase/firestore";
 import slugify from "slugify";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
@@ -100,7 +101,7 @@ export default {
     };
   },
   methods: {
-    addNote() {
+    async addNote() {
       if (this.title || this.content) {
         this.saving = true;
         this.saveStatus = "Saving";
@@ -131,25 +132,20 @@ export default {
           this.hour = this.hour % 12;
           this.meridian = "P.M";
         }
-
-        db.collection("notes")
-          .add({
-            title: this.title,
-            content: this.content,
-            slug: this.slug,
-            moment: [
-              this.year,
-              this.monthNames[this.month],
-              this.day,
-              this.hour,
-              this.minute,
-              this.meridian,
-            ],
-            time: new Date().getTime() / 1000,
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        const docRef = await addDoc(collection(db, "notes"), {
+          title: this.title,
+          content: this.content,
+          slug: this.slug,
+          moment: [
+            this.year,
+            this.monthNames[this.month],
+            this.day,
+            this.hour,
+            this.minute,
+            this.meridian,
+          ],
+          time: new Date().getTime() / 1000,
+        });
         setTimeout(() => {
           this.saving = false;
           this.saved = true;
