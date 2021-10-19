@@ -20,12 +20,17 @@
         .content {
             margin-top: 8px;
             font-size: 14px;
-            overflow: hidden;
             color: getColor(text-secondary);
             p {
                 margin: 0;
                 line-height: 20px;
                 height: 40px;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+                -o-text-overflow: ellipsis;
+                text-overflow: ellipsis;
             }
         }
         .last-edited {

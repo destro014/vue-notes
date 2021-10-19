@@ -21,97 +21,11 @@
       </div>
     </div>
     <div class="notes" v-if="notes.length > 0">
-      <div
-        class="note"
+      <NoteCard
         v-for="note in filteredNotes.slice().reverse()"
         :key="note.id"
-      >
-        <router-link
-          :to="{ name: 'Note', params: { note_slug: note.slug } }"
-          class="note-card"
-        >
-          <div class="title">
-            {{ note.title }}
-          </div>
-          <div class="content">
-            <p>{{ snippet(note.content) }}</p>
-          </div>
-          <div class="last-edited">
-            <div class="date">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3.09253 9.40427H20.9165" />
-                <path
-                  d="M16.442 13.3097H16.4512"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M12.0047 13.3097H12.014"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M7.55793 13.3097H7.5672"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M16.442 17.1962H16.4512"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M12.0047 17.1962H12.014"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M7.55793 17.1962H7.5672"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M16.0438 2V5.29078"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M7.9654 2V5.29078"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M16.2383 3.57922H7.77096C4.83427 3.57922 3 5.21516 3 8.22225V17.2719C3 20.3263 4.83427 22 7.77096 22H16.229C19.175 22 21 20.3546 21 17.3475V8.22225C21.0092 5.21516 19.1842 3.57922 16.2383 3.57922Z"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-
-              <span
-                >{{ note.moment[1] }} {{ note.moment[2] }},
-                {{ note.moment[0] }}</span
-              >
-            </div>
-            <div class="time">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M21.2498 12.0005C21.2498 17.1095 17.1088 21.2505 11.9998 21.2505C6.89076 21.2505 2.74976 17.1095 2.74976 12.0005C2.74976 6.89149 6.89076 2.75049 11.9998 2.75049C17.1088 2.75049 21.2498 6.89149 21.2498 12.0005Z"
-                />
-                <path d="M15.4314 14.9429L11.6614 12.6939V7.84686" />
-              </svg>
-
-              <span
-                >{{ note.moment[3] }} : {{ note.moment[4] }}
-                {{ note.moment[5] }}</span
-              >
-            </div>
-          </div>
-        </router-link>
-      </div>
+        :note="note"
+      />
     </div>
     <div class="skeleton" v-else>
       <div class="skeleton-card"></div>
@@ -138,10 +52,13 @@
 <script>
 import { collection, query, orderBy, getDocs } from "firebase/firestore";
 import db from "@/firebase/init";
-
+import NoteCard from "@/components/NoteCard.vue";
 export default {
   name: "Home",
   props: ["searchTerm"],
+  components: {
+    NoteCard,
+  },
   data() {
     return {
       notes: [],
@@ -159,7 +76,7 @@ export default {
     },
   },
   async mounted() {
-    const q = query(collection(db, "notes"), orderBy("time"));
+    const q = query(collection(db, "notes"), orderBy("lastUpdated"));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach(doc => {
       let note = doc.data();
@@ -170,15 +87,5 @@ export default {
       this.noNotes == true;
     }
   },
-  methods: {
-    snippet(val) {
-      if (!val || typeof val != "string") return "";
-      val = val.slice(0, 56);
-      return val;
-    },
-  },
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss"></style>

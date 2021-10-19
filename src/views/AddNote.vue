@@ -33,13 +33,12 @@
         <input type="text" placeholder="title" v-model="title" />
       </div>
       <div class="note-typed">
-        <!-- <QuillEditor theme="bubble" /> -->
-
-        <textarea
-          name="note"
-          placeholder="type your note here"
-          v-model="content"
-        ></textarea>
+        <QuillEditor
+          :toolbar="toolbar"
+          v-model:content="content"
+          :modules="modules"
+          placeholder="Type your note here"
+        />
       </div>
     </div>
   </div>
@@ -50,7 +49,12 @@ import db from "@/firebase/init";
 import { collection, addDoc } from "firebase/firestore";
 import slugify from "slugify";
 import { QuillEditor } from "@vueup/vue-quill";
+import BlotFormatter from "quill-blot-formatter";
+import ImageCompress from "quill-image-compress";
+import MagicUrl from "quill-magic-url";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import toPlaintext from "quill-delta-to-plaintext";
+
 export default {
   name: "AddNote",
   components: {
@@ -59,42 +63,32 @@ export default {
   data() {
     return {
       title: null,
+      text: null,
       content: null,
-      moment: [],
       slug: null,
-      editorOption: {
-        placeholder: "Enter job description",
-        theme: "snow",
-        modules: {
-          toolbar: [
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            ["bold", "italic", "underline", "strike"],
-            [{ align: [] }],
-            [{ list: "bullet" }, { list: "ordered" }],
-            ["link", "image"],
-          ],
-        },
-      },
-      monthNames: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sept",
-        "Oct",
-        "Nov",
-        "Dec",
+      toolbar: [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        ["bold", "italic", "underline", "strike"],
+        ["blockquote", "code-block"],
+        [{ script: "sub" }, { script: "super" }], // superscript/subscript
+        [{ list: "bullet" }, { list: "ordered" }],
+        ["link", "image"],
+        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
       ],
-      year: null,
-      month: null,
-      day: null,
-      hour: null,
-      minute: null,
-      meridian: null,
+      modules: [
+        {
+          name: "blotFormatter",
+          module: BlotFormatter,
+        },
+        {
+          name: "imageCompress",
+          module: ImageCompress,
+        },
+        {
+          name: "magicUrl",
+          module: MagicUrl,
+        },
+      ],
       saveStatus: "Save",
       saving: false,
       saved: false,
@@ -102,59 +96,31 @@ export default {
   },
   methods: {
     async addNote() {
-      if (this.title || this.content) {
-        this.saving = true;
-        this.saveStatus = "Saving";
-        //create a slug
-        this.slug = slugify(this.title, {
-          replacement: "-",
-          remove: /[$*_+~.()'"!\-:@]/g,
-          lower: true,
-        });
-        //creating date and time
-        this.year = new Date().getFullYear();
-        this.month = new Date().getMonth();
-        this.day = new Date().getDate();
-        this.hour = new Date().getHours();
-        this.minute = new Date().getMinutes();
-        if (this.hour < 10) {
-          this.hour = "0" + this.hour;
-        }
-        if (this.minute < 10) {
-          this.minute = "0" + this.minute;
-        }
-        if (this.hour < 12) {
-          this.meridian = "A.M";
-          if (this.hour == 0) {
-            this.hour = 12;
-          }
-        } else {
-          this.hour = this.hour % 12;
-          this.meridian = "P.M";
-        }
-        const docRef = await addDoc(collection(db, "notes"), {
-          title: this.title,
-          content: this.content,
-          slug: this.slug,
-          moment: [
-            this.year,
-            this.monthNames[this.month],
-            this.day,
-            this.hour,
-            this.minute,
-            this.meridian,
-          ],
-          time: new Date().getTime() / 1000,
-        });
+      this.text = toPlaintext(this.content).slice(0, 200);
+      this.content = JSON.stringify(this.content);
+      this.saving = true;
+      this.saveStatus = "Saving";
+      // create a slug
+      this.slug = slugify(this.title, {
+        replacement: "-",
+        remove: /[$*_+~.()'"!\-:@]/g,
+        lower: true,
+      });
+      const docRef = await addDoc(collection(db, "notes"), {
+        title: this.title,
+        text: this.text,
+        content: JSON.parse(this.content),
+        slug: this.slug,
+        lastUpdated: new Date(),
+      });
+      setTimeout(() => {
+        this.saving = false;
+        this.saved = true;
+        this.saveStatus = "Saved";
         setTimeout(() => {
-          this.saving = false;
-          this.saved = true;
-          this.saveStatus = "Saved";
-          setTimeout(() => {
-            this.$router.push({ name: "Home" });
-          }, 500);
+          this.$router.push({ name: "Home" });
         }, 500);
-      }
+      }, 500);
     },
   },
 };

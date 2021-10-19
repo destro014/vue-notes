@@ -57,12 +57,19 @@
         />
       </div>
       <div class="note-typed">
-        <textarea
+        <!-- <textarea
           name="note"
           placeholder="type your note here"
           v-model="note.content"
-          @input="edited()"
-        ></textarea>
+          @input="edited"
+        ></textarea> -->
+        <QuillEditor
+          :toolbar="toolbar"
+          @update:content="editorUpdated"
+          v-model:content="note.content"
+          :modules="modules"
+          placeholder="Type your note here"
+        />
       </div>
     </div>
 
@@ -105,7 +112,7 @@
         <div class="popup-btn">
           <div class="cancel-btn btn" @click="deletePopup">Cancel</div>
           <div class="delete-approve-btn btn" @click="deleteNote(note.id)">
-            delete
+            {{ deleteBtnLabel }}
           </div>
         </div>
       </div>
@@ -115,6 +122,13 @@
 
 <script>
 import db from "@/firebase/init";
+import { QuillEditor } from "@vueup/vue-quill";
+import BlotFormatter from "quill-blot-formatter";
+import ImageCompress from "quill-image-compress";
+import MagicUrl from "quill-magic-url";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import toPlaintext from "quill-delta-to-plaintext";
+
 import {
   collection,
   query,
@@ -127,48 +141,65 @@ import {
 import slugify from "slugify";
 export default {
   name: "Note",
+  components: {
+    QuillEditor,
+  },
   data() {
     return {
+      toolbar: [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+        ["bold", "italic", "underline", "strike"],
+        ["blockquote", "code-block"],
+        [{ script: "sub" }, { script: "super" }], // superscript/subscript
+        [{ list: "bullet" }, { list: "ordered" }],
+        ["link", "image"],
+        [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+      ],
+      modules: [
+        {
+          name: "blotFormatter",
+          module: BlotFormatter,
+        },
+        {
+          name: "imageCompress",
+          module: ImageCompress,
+        },
+        {
+          name: "magicUrl",
+          module: MagicUrl,
+        },
+      ],
       updateStatus: "Update",
       updating: false,
       updated: false,
       note: null,
       deleteClicked: null,
       title: null,
+      text: null,
       content: null,
-      year: null,
-      month: null,
-      monthNames: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sept",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-      day: null,
-      hour: null,
-      minute: null,
-      meridian: null,
       noteEdited: null,
+      deleteBtnLabel: "delete",
     };
   },
   methods: {
     edited() {
-      if (this.title != this.note.title || this.content != this.note.content) {
+      if (this.title != this.note.title) {
         this.noteEdited = true;
       } else {
         this.noteEdited = false;
       }
     },
+    editorUpdated() {
+      this.noteEdited = true;
+    },
+    editorReady(e) {
+      e.setContents(this.note.content);
+    },
     async update() {
       if (this.note.title) {
+        this.text = toPlaintext(this.note.content).slice(0, 200);
+        this.note.content = JSON.stringify(this.note.content);
         this.updating = true;
         this.updateStatus = "updating";
         //create a slug
@@ -178,40 +209,13 @@ export default {
           lower: true,
         });
         //creating date and time
-        this.year = new Date().getFullYear();
-        this.month = new Date().getMonth();
-        this.day = new Date().getDate();
-        this.hour = new Date().getHours();
-        this.minute = new Date().getMinutes();
-        if (this.hour < 10) {
-          this.hour = "0" + this.hour;
-        }
-        if (this.minute < 10) {
-          this.minute = "0" + this.minute;
-        }
-        if (this.hour < 12) {
-          this.meridian = "A.M";
-          if (this.hour == 0) {
-            this.hour = 12;
-          }
-        } else {
-          this.hour = this.hour % 12;
-          this.meridian = "P.M";
-        }
         const ref = doc(db, "notes", this.note.id);
         await updateDoc(ref, {
           title: this.note.title,
-          content: this.note.content,
+          text: this.text,
+          content: JSON.parse(this.note.content),
           slug: this.note.slug,
-          moment: [
-            this.year,
-            this.monthNames[this.month],
-            this.day,
-            this.hour,
-            this.minute,
-            this.meridian,
-          ],
-          time: new Date().getTime() / 1000,
+          lastUpdated: new Date(),
         });
         setTimeout(() => {
           this.updating = false;
@@ -227,7 +231,9 @@ export default {
       this.deleteClicked = !this.deleteClicked;
     },
     async deleteNote(id) {
+      this.deleteBtnLabel = "Deleting";
       await deleteDoc(doc(db, "notes", id));
+      this.deleteBtnLabel = "Deleted";
       setTimeout(() => {
         this.$router.push({ name: "Home" });
       }, 500);

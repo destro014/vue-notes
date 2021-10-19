@@ -130,7 +130,7 @@
       font-size: 40px;
       background: transparent;
       border: none;
-      border-bottom: 2px solid getColor(grey);
+      border-bottom: 2px solid getColor(background-tertary);
       color: getColor(text-primary);
       font-weight: 700;
       padding: 0 20px;
@@ -161,6 +161,75 @@
       &::placeholder {
         font-weight: 500;
       }
+    }
+    .ql-toolbar {
+      &.ql-snow {
+        border-color: transparent;
+        border-bottom-color: getColor(background-tertary);
+        border-radius: 20px 20px 0 0;
+        padding: 16px;
+        background: getColor(background-primary);
+        font-family: "Montserrat", "Helvetica", "Arial", sans-serif;
+      }
+    }
+    .ql-container {
+      font-family: "Montserrat", "Helvetica", "Arial", sans-serif;
+      font-size: 16px;
+      color: getColor(text-secondary);
+      &.ql-snow {
+        border-color: transparent;
+        background: getColor(background-primary);
+        border-radius: 0 0 20px 20px;
+      }
+    }
+    .ql-editor {
+      min-height: 560px;
+      padding: 16px;
+      &.ql-blank::before {
+        font-size: 16px;
+        color: getColor(text-tertary);
+      }
+    }
+    .ql-snow.ql-toolbar button:hover,
+    .ql-snow .ql-toolbar button:hover,
+    .ql-snow.ql-toolbar button:focus,
+    .ql-snow .ql-toolbar button:focus,
+    .ql-snow.ql-toolbar .ql-picker-label:hover,
+    .ql-snow .ql-toolbar .ql-picker-label:hover,
+    .ql-snow.ql-toolbar .ql-picker-item:hover,
+    .ql-snow .ql-toolbar .ql-picker-item:hover {
+      background-color: getColor(background-tertary);
+    }
+    .ql-snow {
+      .ql-picker {
+        color: getColor(text-tertary);
+      }
+      .ql-stroke {
+        stroke: getColor(text-tertary);
+      }
+      a {
+        color: getColor(primary);
+      }
+      .ql-fill,
+      .ql-stroke.ql-fill {
+        fill: getColor(text-tertary);
+      }
+      .ql-picker-options {
+        background-color: getColor(background-primary);
+      }
+    }
+
+    .ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+      border-color: getColor(background-tertary);
+    }
+    .ql-snow.ql-toolbar button.ql-active,
+    .ql-snow .ql-toolbar button.ql-active,
+    .ql-snow.ql-toolbar .ql-picker-label.ql-active,
+    .ql-snow .ql-toolbar .ql-picker-label.ql-active,
+    .ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+    .ql-snow .ql-toolbar .ql-picker-item.ql-selected {
+      background-color: getColor(background-secondary);
+      color: getColor(primary);
     }
   }
 }
